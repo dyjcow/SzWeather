@@ -1,0 +1,43 @@
+package com.dyj.szweather.bean;
+
+import org.litepal.crud.LitePalSupport;
+
+/**
+ * @author ：Dyj
+ * @date ：Created in 2022/5/26 19:31
+ * @description：DataBase of City
+ * @modified By：
+ * @version: 1.0
+ */
+public class CityDB extends LitePalSupport {
+
+    private String cityName;
+
+    private String cityAdm2;
+
+    private String location;
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getCityAdm2() {
+        return cityAdm2;
+    }
+
+    public void setCityAdm2(String cityAdm2) {
+        this.cityAdm2 = cityAdm2;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+}

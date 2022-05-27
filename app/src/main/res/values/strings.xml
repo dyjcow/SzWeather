@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">SzWeather</string>
+    <string name="load_success">Loading success</string>
+    <string name="load_error">Loading error</string>
+    <string name="code" translatable="false">code</string>
+    <string name="time_out">Time out Try again</string>
+    <string name="PARSE_ERROR_MSG">Failed to parse data</string>
+    <string name="BAD_NETWORK_MSG">Network problem</string>
+    <string name="CONNECT_ERROR_MSG">Connection error</string>
+    <string name="CONNECT_TIMEOUT_MSG">Connection timed out</string>
+    <string name="OTHER_MSG">Unknown error</string>
+    <string name="error_msg" translatable="false">msg</string>
+    <string name="url" translatable="false">https://devapi.qweather.com/</string>
+    <string name="key" translatable="false">71deef4fa8874cbfa2b058a9ea091f7d</string>
+
+
+</resources>
