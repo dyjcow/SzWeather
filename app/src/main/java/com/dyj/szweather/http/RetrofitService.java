@@ -62,6 +62,7 @@ public class RetrofitService {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(new MoreBaseUrlInterceptor(API.getKeyUrl()))
                 .addInterceptor(httpLoggingInterceptor)
                 //设置超时时间
                 .connectTimeout(15, TimeUnit.SECONDS)

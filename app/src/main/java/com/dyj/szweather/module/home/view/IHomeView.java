@@ -14,4 +14,6 @@ import java.util.List;
  */
 public interface IHomeView extends BaseView {
     void showPic(String url);
+
+    void getGEO(String msg);
 }

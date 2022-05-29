@@ -10,8 +10,10 @@
     <string name="CONNECT_TIMEOUT_MSG">Connection timed out</string>
     <string name="OTHER_MSG">Unknown error</string>
     <string name="error_msg" translatable="false">msg</string>
-    <string name="url" translatable="false">https://devapi.qweather.com/</string>
+    <string name="weatherurl" translatable="false">https://devapi.qweather.com/</string>
     <string name="key" translatable="false">71deef4fa8874cbfa2b058a9ea091f7d</string>
+    <string name="geourl" translatable="false">https://geoapi.qweather.com/</string>
+    <string name="mxzp" translatable="false">https://www.mxnzp.com/</string>
 
 
 </resources>
