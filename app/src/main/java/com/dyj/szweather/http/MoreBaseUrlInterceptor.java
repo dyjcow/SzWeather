@@ -45,15 +45,7 @@ public class MoreBaseUrlInterceptor implements Interceptor {
             String urlName = urlNameList.get(0);
             HttpUrl baseURL=null;
             //根据头信息中配置的value,来匹配新的base_url地址
-
             baseURL = HttpUrl.parse(Objects.requireNonNull(keyUrl.get(urlName)));
-
-//            if ("m".equals(urlName)) {
-//                baseURL = HttpUrl.parse(API.M_URL);
-//            } else if ("geo".equals(urlName)) {
-//                baseURL = HttpUrl.parse(API.GEO_URL);
-//            }
-
             //重建新的HttpUrl，需要重新设置的url部分
             HttpUrl newHttpUrl = oldUrl.newBuilder()
                     .scheme(baseURL.scheme())//http协议如：http或者https
