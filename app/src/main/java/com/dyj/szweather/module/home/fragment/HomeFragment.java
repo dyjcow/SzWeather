@@ -42,6 +42,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, FragmentHomeBindin
     @Override
     protected void initView() {
         presenter.getPIc(position);
+        getBinding().button.setOnClickListener(v -> presenter.getGEO("beijing"));
     }
 
     /**
@@ -56,5 +57,10 @@ public class HomeFragment extends BaseFragment<HomePresenter, FragmentHomeBindin
     @Override
     public void showPic(String url) {
         Glide.with(this).load(url).into(getBinding().imgBc);
+    }
+
+    @Override
+    public void getGEO(String msg) {
+        ToastUtil.showToast(msg);
     }
 }
