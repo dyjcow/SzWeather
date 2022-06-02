@@ -14,6 +14,8 @@
     <string name="key" translatable="false">71deef4fa8874cbfa2b058a9ea091f7d</string>
     <string name="geourl" translatable="false">https://geoapi.qweather.com/</string>
     <string name="mxzp" translatable="false">https://www.mxnzp.com/</string>
-
+    <string name="cancel">cancel</string>
+    <string name="popularCity">popularCity</string>
+    <string name="Search">SearchCity</string>
 
 </resources>

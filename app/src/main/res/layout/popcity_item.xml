@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:orientation="vertical"
+    android:layout_width="@dimen/dp_90"
+    android:layout_height="@dimen/dp_50">
+    <com.google.android.material.button.MaterialButton
+        app:rippleColor="@color/gray"
+        android:layout_margin="6dp"
+        android:textColor="@color/black"
+        android:id="@+id/button"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_popular_city"
+        app:shapeAppearance="@drawable/shape_popbtn"
+        />
+</LinearLayout>
+

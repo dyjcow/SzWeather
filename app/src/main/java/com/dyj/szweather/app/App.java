@@ -2,14 +2,13 @@ package com.dyj.szweather.app;
 
 import android.app.Application;
 import android.content.ContentProvider;
+import android.content.Context;
 import android.os.Build;
-
 import com.didichuxing.doraemonkit.DoKit;
 import com.dyj.szweather.util.ActivityUtil;
 import com.dyj.szweather.util.LogUtil;
 import com.dyj.szweather.util.MyUtil;
 import com.tamsiree.rxkit.RxTool;
-
 import org.litepal.LitePal;
 
 /**
@@ -40,9 +39,11 @@ public class App extends Application {
      * disabled until user unlock happens, especially when component callback
      * order matters.</p>
      */
+    private static Context context;
     @Override
     public void onCreate() {
         super.onCreate();
+        context=getApplicationContext();
         //载入Dokit监测
         new DoKit.Builder(this)
                 .productId("b8175642d4047afe7352d3a3faee2b74")
@@ -57,5 +58,9 @@ public class App extends Application {
         LogUtil.setIsLog(true);
         //注册Activity生命周期
         registerActivityLifecycleCallbacks(ActivityUtil.getActivityLifecycleCallbacks());
+    }
+
+    public static Context getContext() {
+        return context;
     }
 }
