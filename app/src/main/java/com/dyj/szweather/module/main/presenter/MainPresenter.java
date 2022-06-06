@@ -1,7 +1,15 @@
 package com.dyj.szweather.module.main.presenter;
 
+import com.dyj.szweather.base.BaseBean;
+import com.dyj.szweather.base.BaseObserver;
 import com.dyj.szweather.base.BasePresenter;
+import com.dyj.szweather.bean.PictureGirl;
+import com.dyj.szweather.common.GlobalConstant;
 import com.dyj.szweather.module.main.view.IMainView;
+import com.dyj.szweather.util.SpUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author ：Dyj
@@ -11,7 +19,6 @@ import com.dyj.szweather.module.main.view.IMainView;
  * @version: 1.0
  */
 public class MainPresenter extends BasePresenter<IMainView> {
-
 
     public MainPresenter(IMainView baseView) {
         super(baseView);

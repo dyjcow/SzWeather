@@ -1,6 +1,10 @@
 package com.dyj.szweather.module.main.view;
 
 import com.dyj.szweather.base.BaseView;
+import com.dyj.szweather.bean.CityDB;
+import com.dyj.szweather.bean.PictureGirl;
+
+import java.util.List;
 
 /**
  * @author ：Dyj
@@ -10,5 +14,13 @@ import com.dyj.szweather.base.BaseView;
  * @version: 1.0
  */
 public interface IMainView extends BaseView {
+    void getCity(List<CityDB> list);
 
+    void showPic(String url);
+
+    void showTime(String time);
+
+    void showCity();
+
+    void hideCity();
 }

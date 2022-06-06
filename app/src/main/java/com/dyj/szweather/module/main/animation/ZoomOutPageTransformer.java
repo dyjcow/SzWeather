@@ -1,4 +1,4 @@
-package com.dyj.szweather.module.home.animation;
+package com.dyj.szweather.module.main.animation;
 
 import android.view.View;
 

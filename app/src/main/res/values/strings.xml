@@ -15,5 +15,26 @@
     <string name="geourl" translatable="false">https://geoapi.qweather.com/</string>
     <string name="mxzp" translatable="false">https://www.mxnzp.com/</string>
 
+    <string name="permission_must">The permission to be applied for is the permission that the program must rely on. You need permission to use our software</string>
+    <string name="i_know">I understand</string>
+    <string name="permission_hand">You need to manually open the permission in the application settings</string>
+    <string name="deny">You have denied the following permissions:</string>
+    <string name="hours_weather">24 hours weather</string>
+    <string name="hours" translatable="false">8:00</string>
+    <string name="forecast_15">"Fifteen day forecast "</string>
+    <string name="air_quality">Air Quality</string>
+    <string name="pm2_5" translatable="false">PM2.5</string>
+    <string name="so2" translatable="false">SO₂</string>
+    <string name="co" translatable="false">CO</string>
+    <string name="pm10" translatable="false">PM10</string>
+    <string name="no2" translatable="false">NO₂</string>
+    <string name="o3" translatable="false">O³</string>
+    <string name="sun_moon">SUN AND MOON</string>
+    <string name="home_wear">Dress Index</string>
+    <string name="home_health">Cold Index</string>
+    <string name="home_makeup">Makeup Index</string>
+    <string name="living_index">Living Index</string>
+    <string name="double_quit">When you presse again, quit the </string>
+
 
 </resources>
