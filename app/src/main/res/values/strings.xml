@@ -35,6 +35,10 @@
     <string name="home_makeup">Makeup Index</string>
     <string name="living_index">Living Index</string>
     <string name="double_quit">When you presse again, quit the </string>
+    <string name="cancel">cancel</string>
+    <string name="popularCity">popularCity</string>
+    <string name="Search">SearchCity</string>
+
 
 
 </resources>

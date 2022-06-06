@@ -65,6 +65,10 @@
         <item name="android:layout_height">60dp</item>
     </style>
 
+    <style name="popBtn" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">16dp</item>
+    </style>
+
     <style name="name_item_feel" parent="air_item_title">
         <item name="android:textSize">10sp</item>
     </style>

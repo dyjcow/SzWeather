@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 
+
 import com.dyj.szweather.util.MyUtil;
 import com.dylanc.viewbinding.base.ViewBindingUtil;
 
@@ -74,6 +75,7 @@ public abstract class BaseActivity<P extends BasePresenter<? extends BaseView>,V
         binding = ViewBindingUtil.inflateWithGeneric(this, getLayoutInflater());
         setContentView(binding.getRoot());
         presenter = createPresenter();
+
         initView();
         initData();
     }
