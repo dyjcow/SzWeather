@@ -15,6 +15,9 @@ import com.dyj.szweather.module.citymanager.adapter.CityAdapter;
 import com.dyj.szweather.module.citymanager.adapter.MyItemTouchHelperCallback;
 import com.dyj.szweather.module.citymanager.presenter.CManagerPresenter;
 import com.dyj.szweather.module.citymanager.view.ICManagerView;
+import com.dyj.szweather.module.main.activity.MainActivity;
+import com.dyj.szweather.module.search.activity.SearchActivity;
+import com.dyj.szweather.util.ActivityUtil;
 
 import java.util.List;
 
@@ -36,6 +39,7 @@ public class CManagerActivity extends BaseActivity<CManagerPresenter, ActivityCm
 
     @Override
     protected void initData() {
+        getBinding().cityFabAdd.setOnClickListener(v -> ActivityUtil.startActivity(SearchActivity.class,true));
 
     }
 

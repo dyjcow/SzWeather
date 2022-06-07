@@ -19,6 +19,7 @@ import com.dyj.szweather.R;
 import com.dyj.szweather.base.BaseActivity;
 import com.dyj.szweather.bean.CityDB;
 import com.dyj.szweather.databinding.MainActivityMainBinding;
+import com.dyj.szweather.module.citymanager.activity.CManagerActivity;
 import com.dyj.szweather.module.home.fragment.HomeFragment;
 import com.dyj.szweather.module.main.adapter.MainViewPagerAdapter;
 import com.dyj.szweather.module.main.animation.DepthPageTransformer;
@@ -252,7 +253,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainActivityMainBi
                 ActivityUtil.startActivity(SearchActivity.class,false);
                 break;
             case menu_main_cityamanage:
-                RxToast.showToast("cancel");
+                ActivityUtil.startActivity(CManagerActivity.class,false);
                 break;
             default:
         }

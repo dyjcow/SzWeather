@@ -43,7 +43,6 @@
             android:name=".module.citymanager.activity.CManagerActivity"
             android:exported="false" />
         <activity
-        <activity
             android:name=".module.main.activity.SplashActivity"
             android:theme="@style/SplashTheme"
             android:exported="true">
