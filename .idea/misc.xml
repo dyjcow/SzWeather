@@ -32,6 +32,9 @@
         <entry key="..\:/Work/SzWeather/app/src/main/res/layout/main_activity_splash.xml" value="0.3541666666666667" />
         <entry key="..\:/Work/SzWeather/app/src/main/res/layout/popcity_item.xml" value="0.24947916666666667" />
         <entry key="..\:/Work/SzWeather/app/src/main/res/menu/toorbar.xml" value="0.3541666666666667" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/activity_cmanager.xml" value="0.25625" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/city_item.xml" value="0.25625" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/item_city.xml" value="0.15625" />
       </map>
     </option>
   </component>
