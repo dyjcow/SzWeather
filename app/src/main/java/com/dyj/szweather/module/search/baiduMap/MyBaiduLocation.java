@@ -19,6 +19,7 @@ import com.dyj.szweather.module.search.activity.SearchActivity;
 import org.litepal.LitePal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -85,7 +86,8 @@ public class MyBaiduLocation {
             activity.getBinding().locationCity.setOnClickListener(v -> {
                 if ( LitePal.where("CityName==?",bdLocation.getDistrict()).find(CityDB.class).size()==0){
                 CityDB cityDB =new CityDB();
-                cityDB.setLocation(bdLocation.getAdCode());
+//                cityDB.setLocation(bdLocation.getAdCode());
+                cityDB.setLocation(String.format(Locale.US,"%.2f",bdLocation.getLongitude()) +","+ String.format(Locale.US,"%.2f",bdLocation.getLatitude()) );
                 cityDB.setCityName(bdLocation.getDistrict());
                 cityDB.setCityAdm2(bdLocation.getCity());
                 cityDB.save();

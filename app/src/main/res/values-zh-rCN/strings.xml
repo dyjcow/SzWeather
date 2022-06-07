@@ -27,4 +27,6 @@
     <string name="cancel">取消</string>
     <string name="popularCity">热门城市</string>
     <string name="Search">搜索并添加城市</string>
+    <string name="city_search">城市搜索</string>
+    <string name="city_manage">城市管理</string>
 </resources>

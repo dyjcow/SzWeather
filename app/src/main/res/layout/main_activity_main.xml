@@ -56,15 +56,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:id="@+id/img_add"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/icon_add"
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/main_menu_ebook"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="25dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

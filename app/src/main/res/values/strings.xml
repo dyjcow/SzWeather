@@ -38,7 +38,8 @@
     <string name="cancel">cancel</string>
     <string name="popularCity">popularCity</string>
     <string name="Search">SearchCity</string>
-
+    <string name="city_search">City Search</string>
+    <string name="city_manage">City Manage</string>
 
 
 </resources>

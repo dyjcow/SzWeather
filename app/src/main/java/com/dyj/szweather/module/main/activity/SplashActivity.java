@@ -4,11 +4,17 @@ package com.dyj.szweather.module.main.activity;
 import android.os.Handler;
 
 import com.dyj.szweather.base.BaseActivity;
+import com.dyj.szweather.bean.CityDB;
 import com.dyj.szweather.databinding.MainActivitySplashBinding;
 import com.dyj.szweather.module.main.presenter.SplashPresenter;
 import com.dyj.szweather.module.main.view.ISplashView;
+import com.dyj.szweather.module.search.activity.SearchActivity;
 import com.dyj.szweather.util.ActivityUtil;
 import com.zackratos.ultimatebarx.ultimatebarx.java.UltimateBarX;
+
+import org.litepal.LitePal;
+
+import java.util.List;
 
 public class SplashActivity extends BaseActivity<SplashPresenter, MainActivitySplashBinding> implements ISplashView {
 
@@ -27,7 +33,9 @@ public class SplashActivity extends BaseActivity<SplashPresenter, MainActivitySp
      */
     @Override
     protected void initView() {
-        new Handler().postDelayed(() -> ActivityUtil.startActivity(MainActivity.class,true),1000);
+        CityDB cityDB = LitePal.findFirst(CityDB.class);
+        if (cityDB != null) new Handler().postDelayed(() -> ActivityUtil.startActivity(MainActivity.class,true),1000);
+        else new Handler().postDelayed(() -> ActivityUtil.startActivity(SearchActivity.class,true),1000);
 
     }
 
