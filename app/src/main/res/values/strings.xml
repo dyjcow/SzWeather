@@ -34,12 +34,21 @@
     <string name="home_health">Cold Index</string>
     <string name="home_makeup">Makeup Index</string>
     <string name="living_index">Living Index</string>
-    <string name="double_quit">When you presse again, quit the </string>
+    <string name="double_quit">"Presse again, quit  "</string>
     <string name="cancel">cancel</string>
     <string name="popularCity">popularCity</string>
     <string name="Search">SearchCity</string>
     <string name="city_search">City Search</string>
     <string name="city_manage">City Manage</string>
+    <string name="sunday">Sun</string>
+    <string name="monday">Mon</string>
+    <string name="tuesday">Tue</string>
+    <string name="wednesday">Wed</string>
+    <string name="thursday">Thu</string>
+    <string name="friday">Fri</string>
+    <string name="saturday">Sat</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
 
 
 </resources>

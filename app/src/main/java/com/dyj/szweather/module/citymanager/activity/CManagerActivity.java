@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import com.dyj.szweather.R;
@@ -39,8 +40,8 @@ public class CManagerActivity extends BaseActivity<CManagerPresenter, ActivityCm
 
     @Override
     protected void initData() {
-        getBinding().cityFabAdd.setOnClickListener(v -> ActivityUtil.startActivity(SearchActivity.class,true));
-
+        getBinding().cityFabAdd.setOnClickListener(v -> ActivityUtil.startActivity(SearchActivity.class));
+        getBinding().cityIvBack.setOnClickListener(v -> onBackPressed());
     }
 
     /**

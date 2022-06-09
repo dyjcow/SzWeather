@@ -23,7 +23,7 @@ import com.dyj.szweather.databinding.HomeLayoutFifteenBinding;
 import com.dyj.szweather.databinding.HomeLayoutHoursBinding;
 import com.dyj.szweather.databinding.HomeLayoutSunMoonBinding;
 import com.dyj.szweather.databinding.HomeLayoutTodayBriefInfoBinding;
-import com.dyj.szweather.module.home.adapter.Forecast15dAdapter;
+import com.dyj.szweather.module.home.adapter.FifteenAdapter;
 import com.dyj.szweather.module.home.adapter.HoursAdapter;
 import com.dyj.szweather.module.home.presenter.HomePresenter;
 import com.dyj.szweather.module.home.view.IHomeView;
@@ -57,7 +57,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeFragmentHomeBi
 
     HoursAdapter hoursAdapter;
 
-    Forecast15dAdapter forecast15dAdapter;
+    FifteenAdapter fifteenAdapter;
 
 
 
@@ -149,14 +149,15 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeFragmentHomeBi
 
     @Override
     public void showWeatherDay(List<WeatherDay> daily) {
-        int min = 0,max = 0 ;
+        int min = Integer.parseInt(daily.get(0).getTempMin());
+        int max = Integer.parseInt(daily.get(0).getTempMax()) ;
         for (WeatherDay day : daily){
             min = Math.min(Integer.parseInt(day.getTempMin()),min);
             max = Math.max(Integer.parseInt(day.getTempMax()),max);
         }
-        forecast15dAdapter = new Forecast15dAdapter(requireContext(),daily);
-        forecast15dAdapter.setRange(min,max);
-        fifteenBinding.rvForecast15.setAdapter(forecast15dAdapter);
+        fifteenAdapter = new FifteenAdapter(R.layout.item_forecast15,daily);
+        fifteenAdapter.setRange(min,max);
+        fifteenBinding.rvForecast15.setAdapter(fifteenAdapter);
         fifteenBinding.rvForecast15.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
         WeatherDay today = daily.get(0);
         String  currentTime = MyUtil.getNowTime();

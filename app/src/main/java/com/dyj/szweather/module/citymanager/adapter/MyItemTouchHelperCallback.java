@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dyj.szweather.R;
+import com.dyj.szweather.util.MyUtil;
 
 
 public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
@@ -87,8 +88,7 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
     public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
         if (actionState != ItemTouchHelper.ACTION_STATE_IDLE){
             //为item设置背景颜色
-            viewHolder.itemView.setBackgroundColor(viewHolder.itemView.getContext().getResources().
-                    getColor(R.color.gray));
+            viewHolder.itemView.setBackgroundColor(MyUtil.ViewGetColor(viewHolder.itemView.getContext(),R.color.gray));
         }
         super.onSelectedChanged(viewHolder, actionState);
     }
@@ -102,8 +102,7 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
     public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder
             viewHolder) {
         //恢复未选中之前的背景颜色
-        viewHolder.itemView.setBackgroundColor(viewHolder.itemView.getContext().getResources().
-                getColor(R.color.white));
+        viewHolder.itemView.setBackgroundColor(MyUtil.ViewGetColor(viewHolder.itemView.getContext(),R.color.white));
         //设置不透明度
         viewHolder.itemView.setAlpha(1);//1-0
         //表示不应用缩放

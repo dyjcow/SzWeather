@@ -155,7 +155,6 @@ public class MainActivity extends BaseActivity<MainPresenter, MainActivityMainBi
         getBinding().vpMain.setPageTransformer(new DepthPageTransformer());
         getBinding().vpMain.setAdapter(mainViewPagerAdapter);
         getBinding().vpMain.setCurrentItem(mCurIndex);
-//        getBinding().vpMain.setOffscreenPageLimit(2);
         getBinding().vpMain.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             /**
              * This method will be invoked when a new page becomes selected. Animation is not

@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dyj.szweather.R;
 import com.dyj.szweather.bean.CityDB;
 import com.dyj.szweather.databinding.ItemCityBinding;
+import com.dyj.szweather.module.main.activity.MainActivity;
+import com.dyj.szweather.util.ActivityUtil;
+import com.dyj.szweather.util.ToastUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,7 +37,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.MyViewHolder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mItemClickListener.onItemClick(v);
+                ActivityUtil.actionSecondStart(MainActivity.class,list.get(holder.getLayoutPosition()).getLocation(),list.get(holder.getLayoutPosition()).getCityName());
             }
         });
         return holder;
@@ -44,7 +47,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull CityAdapter.MyViewHolder holder, int position) {
 
         CityDB city = list.get(position);
-        holder.cityName.setText(city.getCityName()+"-"+city.getLocation());
+        holder.cityName.setText(String.format("%s-%s", city.getCityName(), city.getCityAdm2()));
 
     }
 
