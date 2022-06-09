@@ -14,7 +14,7 @@ import java.util.List;
  * @version: 1.0
  */
 public interface IMainView extends BaseView {
-    void getCity(List<CityDB> list);
+    void getCity();
 
     void showPic(String url);
 

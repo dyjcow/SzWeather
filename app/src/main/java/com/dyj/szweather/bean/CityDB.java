@@ -11,6 +11,8 @@ import org.litepal.crud.LitePalSupport;
  */
 public class CityDB extends LitePalSupport {
 
+    private int id;
+
     private String cityName;
 
     private String cityAdm2;
@@ -39,5 +41,13 @@ public class CityDB extends LitePalSupport {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

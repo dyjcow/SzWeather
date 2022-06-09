@@ -1,5 +1,9 @@
 package com.dyj.szweather.module.citymanager.adapter;
 
+import com.dyj.szweather.bean.CityDB;
+
+import java.util.List;
+
 public interface ItemTouchMoveListener {
 
     /**
@@ -16,4 +20,10 @@ public interface ItemTouchMoveListener {
      * @return
      */
     boolean onItemRemove(int position);
+
+
+    /**
+     * 更新列表到数据库
+     */
+    void refreshList();
 }

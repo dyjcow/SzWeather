@@ -75,7 +75,6 @@ public class MainActivity extends BaseActivity<MainPresenter, MainActivityMainBi
                 .light(true)
                 .transparent()
                 .apply();
-
         location = getIntentData();
         cityName = getIntentSecondData();
         setSupportActionBar(getBinding().mainMenuEbook);
@@ -84,7 +83,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainActivityMainBi
         showPic(PIC_URL);
 
         list = LitePal.findAll(CityDB.class);
-        getCity(list);
+        if (list.isEmpty()) ActivityUtil.startActivity(SearchActivity.class,true);
     }
 
     /**
@@ -95,6 +94,18 @@ public class MainActivity extends BaseActivity<MainPresenter, MainActivityMainBi
 
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Dispatch onResume() to fragments.  Note that for better inter-operation
+     * with older versions of the platform, at the point of this call the
+     * fragments attached to the activity are <em>not</em> resumed.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getCity();
+    }
 
     /**
      * 返回时候回到 0 位置
@@ -142,7 +153,9 @@ public class MainActivity extends BaseActivity<MainPresenter, MainActivityMainBi
 
 
     @Override
-    public void getCity(List<CityDB> list) {
+    public void getCity() {
+        list.clear();
+        list = LitePal.findAll(CityDB.class);
         List<HomeFragment> homeFragmentList = new ArrayList<>();
         int i = 0;
         for (CityDB city : list){

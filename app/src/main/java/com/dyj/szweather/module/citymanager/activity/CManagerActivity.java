@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.telephony.ims.RegistrationManager;
 
 import com.dyj.szweather.R;
 import com.dyj.szweather.base.BaseActivity;
@@ -20,6 +21,9 @@ import com.dyj.szweather.module.main.activity.MainActivity;
 import com.dyj.szweather.module.search.activity.SearchActivity;
 import com.dyj.szweather.util.ActivityUtil;
 
+import org.litepal.LitePal;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class CManagerActivity extends BaseActivity<CManagerPresenter, ActivityCmanagerBinding> implements ICManagerView{
@@ -65,4 +69,25 @@ public class CManagerActivity extends BaseActivity<CManagerPresenter, ActivityCm
         super.onResume();
         presenter.getCityList();
     }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Dispatch onPause() to fragments.
+     */
+    @Override
+    protected void onPause() {
+        List<CityDB> nList = new ArrayList<>();
+        for (CityDB cityDB : mAdapter.getList()){
+            CityDB nCity = new CityDB();
+            nCity.setLocation(cityDB.getLocation());
+            nCity.setCityName(cityDB.getCityName());
+            nCity.setCityAdm2(cityDB.getCityAdm2());
+            nList.add(nCity);
+        }
+        LitePal.deleteAll(CityDB.class);
+        LitePal.saveAll(nList);
+        super.onPause();
+    }
+
 }

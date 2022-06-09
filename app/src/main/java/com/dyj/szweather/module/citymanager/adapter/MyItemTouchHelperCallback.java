@@ -108,6 +108,7 @@ public class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
         //表示不应用缩放
 //        viewHolder.itemView.setScaleX(1);
 //        viewHolder.itemView.setScaleY(1);
+//        moveListener.refreshList();
         super.clearView(recyclerView, viewHolder);
     }
 

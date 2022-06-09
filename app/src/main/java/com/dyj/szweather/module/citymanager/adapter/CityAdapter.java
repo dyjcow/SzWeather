@@ -1,5 +1,6 @@
 package com.dyj.szweather.module.citymanager.adapter;
 
+import android.content.ContentValues;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,12 @@ import com.dyj.szweather.bean.CityDB;
 import com.dyj.szweather.databinding.ItemCityBinding;
 import com.dyj.szweather.module.main.activity.MainActivity;
 import com.dyj.szweather.util.ActivityUtil;
+import com.dyj.szweather.util.LogUtil;
 import com.dyj.szweather.util.ToastUtil;
 
+import org.litepal.LitePal;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -58,7 +63,6 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.MyViewHolder> 
 
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
-//        1.数据交换，2.刷新
         Collections.swap(list, fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
         return true;
@@ -70,6 +74,20 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.MyViewHolder> 
         notifyItemRemoved(position);
         return true;
     }
+
+    /**
+     * 更新列表到数据库
+     */
+    @Override
+    public void refreshList() {
+        LitePal.deleteAll(CityDB.class);
+        LitePal.saveAll(list);
+    }
+
+    public List<CityDB> getList() {
+        return list;
+    }
+
 
     static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView cityName;

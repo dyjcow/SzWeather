@@ -52,7 +52,7 @@ public class FifteenAdapter extends BaseQuickAdapter<WeatherDay, BaseViewHolder>
         binding.ivDay.setImageResource(MyUtil.getWeatherIcon(getContext(),weatherDay.getIconDay()));
         binding.ivNight.setImageResource(MyUtil.getWeatherIcon(getContext(),weatherDay.getIconNight()));
         binding.tvNightDesc.setText(weatherDay.getTextNight());
-        binding.tvWind.setText(weatherDay.getWindScaleDay());
+        binding.tvWind.setText(weatherDay.getWindDirDay());
         binding.tvWindScale.setText(String.format("%s级", weatherDay.getWindScaleDay()));
         binding.tempChart.setData(mMin,mMax,prevDay(weatherDay),weatherDay,nextDay(weatherDay));
     }
