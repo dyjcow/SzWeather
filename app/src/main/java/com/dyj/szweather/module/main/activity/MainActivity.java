@@ -7,6 +7,8 @@ import static com.dyj.szweather.util.ActivityUtil.getIntentSecondData;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +35,7 @@ import com.dyj.szweather.module.main.view.IMainView;
 import com.dyj.szweather.module.search.activity.SearchActivity;
 import com.dyj.szweather.util.ActivityUtil;
 import com.dyj.szweather.util.DisplayUtil;
+import com.dyj.szweather.util.LogUtil;
 import com.tamsiree.rxkit.view.RxToast;
 import com.zackratos.ultimatebarx.ultimatebarx.java.UltimateBarX;
 
@@ -89,6 +92,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainActivityMainBi
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
             String PIC_URL = "https://www.lxtlovely.top/getpic.php?rand=true";
             showPic(PIC_URL);
+            getCity();
         }
     }
 
@@ -101,16 +105,34 @@ public class MainActivity extends BaseActivity<MainPresenter, MainActivityMainBi
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Dispatch onResume() to fragments.  Note that for better inter-operation
-     * with older versions of the platform, at the point of this call the
-     * fragments attached to the activity are <em>not</em> resumed.
+     * Called after {@link #onStop} when the current activity is being
+     * re-displayed to the user (the user has navigated back to it).  It will
+     * be followed by {@link #onStart} and then {@link #onResume}.
+     *
+     * <p>For activities that are using raw {@link Cursor} objects (instead of
+     * creating them through
+     * {@link #managedQuery(Uri, String[], String, String[], String)},
+     * this is usually the place
+     * where the cursor should be requeried (because you had deactivated it in
+     * {@link #onStop}.
+     *
+     * <p><em>Derived classes must call through to the super class's
+     * implementation of this method.  If they do not, an exception will be
+     * thrown.</em></p>
+     *
+     * @see #onStop
+     * @see #onStart
+     * @see #onResume
      */
     @Override
-    protected void onResume() {
-        super.onResume();
-        getCity();
+    protected void onRestart() {
+        super.onRestart();
+        LogUtil.d("onRestart");
+        if (list.isEmpty()) {
+            list = LitePal.findAll(CityDB.class);
+            if (list.isEmpty()) ActivityUtil.startActivity(SearchActivity.class,true);
+            else getCity();
+        }
     }
 
     /**
@@ -160,42 +182,36 @@ public class MainActivity extends BaseActivity<MainPresenter, MainActivityMainBi
 
     @Override
     public void getCity() {
-        list.clear();
-        list = LitePal.findAll(CityDB.class);
-        if (list.isEmpty()) ActivityUtil.startActivity(SearchActivity.class,true);
-        else {
-            List<HomeFragment> homeFragmentList = new ArrayList<>();
-            int i = 0;
-            for (CityDB city : list){
-                HomeFragment homeFragment = new HomeFragment(city.getLocation(),city.getCityName());
-                homeFragmentList.add(homeFragment);
-                if (city.getCityName().equals(cityName)) mCurIndex = i;
-                i++;
-            }
-            mainViewPagerAdapter = new MainViewPagerAdapter(this,homeFragmentList);
-            getBinding().vpMain.setPageTransformer(new DepthPageTransformer());
-            getBinding().vpMain.setAdapter(mainViewPagerAdapter);
-            getBinding().vpMain.setCurrentItem(mCurIndex);
-            getBinding().vpMain.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-                /**
-                 * This method will be invoked when a new page becomes selected. Animation is not
-                 * necessarily complete.
-                 *
-                 * @param position Position index of the new selected page.
-                 */
-                @Override
-                public void onPageSelected(int position) {
-                    super.onPageSelected(position);
-                    getBinding().llRound.getChildAt(mCurIndex).setEnabled(false);
-                    getBinding().llRound.getChildAt(position).setEnabled(true);
-                    mCurIndex = position;
-                    //更新城市名
-                    getBinding().tvCity.setText(list.get(mCurIndex).getCityName());
-                }
-            });
-            showCity(list.size());
+        List<HomeFragment> homeFragmentList = new ArrayList<>();
+        int i = 0;
+        for (CityDB city : list){
+            HomeFragment homeFragment = new HomeFragment(city.getLocation(),city.getCityName());
+            homeFragmentList.add(homeFragment);
+            if (city.getCityName().equals(cityName)) mCurIndex = i;
+            i++;
         }
-
+        mainViewPagerAdapter = new MainViewPagerAdapter(this,homeFragmentList);
+        getBinding().vpMain.setPageTransformer(new DepthPageTransformer());
+        getBinding().vpMain.setAdapter(mainViewPagerAdapter);
+        getBinding().vpMain.setCurrentItem(mCurIndex);
+        getBinding().vpMain.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            /**
+             * This method will be invoked when a new page becomes selected. Animation is not
+             * necessarily complete.
+             *
+             * @param position Position index of the new selected page.
+             */
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                getBinding().llRound.getChildAt(mCurIndex).setEnabled(false);
+                getBinding().llRound.getChildAt(position).setEnabled(true);
+                mCurIndex = position;
+                //更新城市名
+                getBinding().tvCity.setText(list.get(mCurIndex).getCityName());
+            }
+        });
+        showCity(list.size());
     }
 
     @Override
@@ -270,31 +286,18 @@ public class MainActivity extends BaseActivity<MainPresenter, MainActivityMainBi
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        LogUtil.d("item");
         switch (item.getItemId()){
             case menu_main_search:
                 ActivityUtil.startActivity(SearchActivity.class,false);
                 break;
             case menu_main_cityamanage:
                 ActivityUtil.startActivity(CManagerActivity.class,false);
+                list.clear();
                 break;
             default:
         }
         return super.onOptionsItemSelected(item);
     }
-
-    private final ActivityResultLauncher<Intent> requestDataLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-        @Override
-        public void onActivityResult(ActivityResult result) {
-            if (result.getResultCode() == RESULT_OK){
-//                if (result.getData() != null){
-//                    String code = result.getData().getStringExtra("back");
-//
-//                }
-                list.clear();
-                list = LitePal.findAll(CityDB.class);
-                if (list.isEmpty()) ActivityUtil.startActivity(SearchActivity.class,true);
-            }
-        }
-    });
 
 }
