@@ -203,7 +203,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeFragmentHomeBi
             rxDialogSure.show();
         });
         dailyfeelBinding.tvHealthValue.setText(daily.get(1).getCategory());
-        dailyfeelBinding.tvWearName.setText(daily.get(0).getCategory());
+        dailyfeelBinding.tvWearValue.setText(daily.get(0).getCategory());
         dailyfeelBinding.tvMakeupValue.setText(daily.get(2).getCategory());
     }
 

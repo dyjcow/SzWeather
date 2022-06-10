@@ -6,11 +6,16 @@ import static com.dyj.szweather.util.ActivityUtil.getIntentData;
 import static com.dyj.szweather.util.ActivityUtil.getIntentSecondData;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -75,15 +80,16 @@ public class MainActivity extends BaseActivity<MainPresenter, MainActivityMainBi
                 .light(true)
                 .transparent()
                 .apply();
-        location = getIntentData();
-        cityName = getIntentSecondData();
-        setSupportActionBar(getBinding().mainMenuEbook);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-        String PIC_URL = "https://www.lxtlovely.top/getpic.php?rand=true";
-        showPic(PIC_URL);
-
         list = LitePal.findAll(CityDB.class);
         if (list.isEmpty()) ActivityUtil.startActivity(SearchActivity.class,true);
+        else {
+            location = getIntentData();
+            cityName = getIntentSecondData();
+            setSupportActionBar(getBinding().mainMenuEbook);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+            String PIC_URL = "https://www.lxtlovely.top/getpic.php?rand=true";
+            showPic(PIC_URL);
+        }
     }
 
     /**
@@ -156,36 +162,40 @@ public class MainActivity extends BaseActivity<MainPresenter, MainActivityMainBi
     public void getCity() {
         list.clear();
         list = LitePal.findAll(CityDB.class);
-        List<HomeFragment> homeFragmentList = new ArrayList<>();
-        int i = 0;
-        for (CityDB city : list){
-            HomeFragment homeFragment = new HomeFragment(city.getLocation(),city.getCityName());
-            homeFragmentList.add(homeFragment);
-            if (city.getCityName().equals(cityName)) mCurIndex = i;
-            i++;
-        }
-        mainViewPagerAdapter = new MainViewPagerAdapter(this,homeFragmentList);
-        getBinding().vpMain.setPageTransformer(new DepthPageTransformer());
-        getBinding().vpMain.setAdapter(mainViewPagerAdapter);
-        getBinding().vpMain.setCurrentItem(mCurIndex);
-        getBinding().vpMain.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            /**
-             * This method will be invoked when a new page becomes selected. Animation is not
-             * necessarily complete.
-             *
-             * @param position Position index of the new selected page.
-             */
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                getBinding().llRound.getChildAt(mCurIndex).setEnabled(false);
-                getBinding().llRound.getChildAt(position).setEnabled(true);
-                mCurIndex = position;
-                //更新城市名
-                getBinding().tvCity.setText(list.get(mCurIndex).getCityName());
+        if (list.isEmpty()) ActivityUtil.startActivity(SearchActivity.class,true);
+        else {
+            List<HomeFragment> homeFragmentList = new ArrayList<>();
+            int i = 0;
+            for (CityDB city : list){
+                HomeFragment homeFragment = new HomeFragment(city.getLocation(),city.getCityName());
+                homeFragmentList.add(homeFragment);
+                if (city.getCityName().equals(cityName)) mCurIndex = i;
+                i++;
             }
-        });
-        showCity(list.size());
+            mainViewPagerAdapter = new MainViewPagerAdapter(this,homeFragmentList);
+            getBinding().vpMain.setPageTransformer(new DepthPageTransformer());
+            getBinding().vpMain.setAdapter(mainViewPagerAdapter);
+            getBinding().vpMain.setCurrentItem(mCurIndex);
+            getBinding().vpMain.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                /**
+                 * This method will be invoked when a new page becomes selected. Animation is not
+                 * necessarily complete.
+                 *
+                 * @param position Position index of the new selected page.
+                 */
+                @Override
+                public void onPageSelected(int position) {
+                    super.onPageSelected(position);
+                    getBinding().llRound.getChildAt(mCurIndex).setEnabled(false);
+                    getBinding().llRound.getChildAt(position).setEnabled(true);
+                    mCurIndex = position;
+                    //更新城市名
+                    getBinding().tvCity.setText(list.get(mCurIndex).getCityName());
+                }
+            });
+            showCity(list.size());
+        }
+
     }
 
     @Override
@@ -271,4 +281,20 @@ public class MainActivity extends BaseActivity<MainPresenter, MainActivityMainBi
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private final ActivityResultLauncher<Intent> requestDataLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if (result.getResultCode() == RESULT_OK){
+//                if (result.getData() != null){
+//                    String code = result.getData().getStringExtra("back");
+//
+//                }
+                list.clear();
+                list = LitePal.findAll(CityDB.class);
+                if (list.isEmpty()) ActivityUtil.startActivity(SearchActivity.class,true);
+            }
+        }
+    });
+
 }
