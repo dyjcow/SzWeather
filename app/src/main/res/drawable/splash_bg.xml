@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/blue_200" />
+        </shape>
+    </item>
+
+
+    <item
+        android:gravity="center"
+        android:drawable="@drawable/ic_logo"
+        />
+<!--    <item-->
+<!--        android:top="301dp"-->
+<!--        android:gravity="center|top">-->
+<!--        <bitmap-->
+<!--            android:src="@drawable/ic_tangle_low" />-->
+
+<!--    </item>-->
+
+<!--    <item-->
+<!--        android:gravity="center|bottom"-->
+<!--        android:drawable="@drawable/ic_we_name" />-->
+
+
+
+
+
+
+
+</layer-list>

@@ -11,4 +11,21 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="color_333">#333333</color>
+    <color name="color_666">#666666</color>
+    <color name="color_black1">#212121</color>
+    <color name="color_999">#999999</color>
+    <color name="color_a4a4a4">#A4A4A4</color>
+    <color name="color_4a4a4a">#4a4a4a</color>
+    <color name="color_air_leaf_1">#73DC29</color>
+    <color name="color_air_leaf_2">#EADD14</color>
+    <color name="color_air_leaf_3">#EA8A01</color>
+    <color name="color_air_leaf_4">#FF460D</color>
+    <color name="color_air_leaf_5">#B12C9A</color>
+    <color name="color_air_leaf_6">#582C21</color>
+    <color name="sun_line_color">#333333</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="air_text_common_light">#363636</color>
+    <color name="back_white">#f7f8fa</color>
+    <color name="attention_text_light">#E9EAEF</color>
 </resources>

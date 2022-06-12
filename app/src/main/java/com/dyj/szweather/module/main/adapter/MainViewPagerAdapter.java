@@ -7,6 +7,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.dyj.szweather.module.home.fragment.HomeFragment;
 
+import java.util.List;
+
 /**
  * @author ：Dyj
  * @date ：Created in 2022/5/27 20:34
@@ -15,14 +17,18 @@ import com.dyj.szweather.module.home.fragment.HomeFragment;
  * @version: 1.0
  */
 public class MainViewPagerAdapter extends FragmentStateAdapter {
+
+    List<HomeFragment> list;
+
     /**
      * @param fragmentActivity if the {@link ViewPager2} lives directly in a
      *                         {@link FragmentActivity} subclass.
      * @see FragmentStateAdapter#FragmentStateAdapter(Fragment)
      * @see FragmentStateAdapter#FragmentStateAdapter(FragmentManager, Lifecycle)
      */
-    public MainViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+    public MainViewPagerAdapter(@NonNull FragmentActivity fragmentActivity ,List<HomeFragment> list) {
         super(fragmentActivity);
+        this.list = list;
     }
 
     /**
@@ -42,7 +48,7 @@ public class MainViewPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return new HomeFragment(position);
+        return list.get(position);
     }
 
     /**
@@ -52,6 +58,6 @@ public class MainViewPagerAdapter extends FragmentStateAdapter {
      */
     @Override
     public int getItemCount() {
-        return 10;
+        return list.size();
     }
 }

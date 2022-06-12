@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.didichuxing.doraemonkit.util.ToastUtils;
 import com.dyj.szweather.base.BaseActivity;
 import com.dyj.szweather.base.BaseBean;
 import com.dyj.szweather.bean.CityDB;
@@ -21,6 +20,8 @@ import com.dyj.szweather.module.search.adapter.PopAdapter;
 import com.dyj.szweather.module.search.baiduMap.MyBaiduLocation;
 import com.dyj.szweather.module.search.presenter.SearchPresenter;
 import com.dyj.szweather.module.search.view.ISearchView;
+import com.tamsiree.rxkit.view.RxToast;
+
 import org.litepal.LitePal;
 import java.util.ArrayList;
 import java.util.List;
@@ -169,12 +170,12 @@ public class SearchActivity extends BaseActivity<SearchPresenter, ActivitySearch
 
     @Override
     public void showSearchError() {
-        ToastUtils.showShort("城市不存在");
+        RxToast.showToast("城市不存在");
     }
 
     @Override
     public void showGetLocationError() {
-        ToastUtils.showShort("定位失败");
+        RxToast.showToast("定位失败");
     }
 
 

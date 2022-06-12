@@ -3,13 +3,37 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/26311/Desktop/weather/app/src/main/res/drawable/bg_popular_city.xml" value="0.1" />
-        <entry key="..\:/Users/26311/Desktop/weather/app/src/main/res/drawable/shape_popbtn.xml" value="0.1205" />
-        <entry key="..\:/Users/26311/Desktop/weather/app/src/main/res/layout/activity_search.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/26311/Desktop/weather/app/src/main/res/layout/fragment_home.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/26311/Desktop/weather/app/src/main/res/layout/popcity_item.xml" value="0.24947916666666667" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/drawable/background.xml" value="0.3703125" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/drawable/bg_popular_city.xml" value="0.1" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/drawable/ic_logo.xml" value="0.3703125" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/drawable/ic_we_name.xml" value="0.3078125" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/drawable/icon_100.xml" value="0.3703125" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/drawable/icon_102.xml" value="0.3703125" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/drawable/icon_804.xml" value="0.3703125" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/drawable/main_roll_bg.xml" value="0.3703125" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/drawable/main_roll_icon.xml" value="0.3703125" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/drawable/shape_popbtn.xml" value="0.1205" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/drawable/shape_rect_r8_tcc_white.xml" value="0.3703125" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/drawable/splash_bg.xml" value="0.3078125" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/Main_activity_main.xml" value="0.3541666666666667" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/activity_cmanager.xml" value="0.3541666666666667" />
         <entry key="..\:/Work/SzWeather/app/src/main/res/layout/activity_main.xml" value="0.3541666666666667" />
-        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/fragment_home.xml" value="0.3541666666666667" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/activity_search.xml" value="0.24947916666666667" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/fragment_home.xml" value="0.24947916666666667" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/home_fragment_home.xml" value="0.3333333333333333" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/home_layout_air_quality.xml" value="0.3333333333333333" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/home_layout_dailyfeel.xml" value="0.3333333333333333" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/home_layout_fifteen.xml" value="0.1967654986522911" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/home_layout_hours.xml" value="0.3333333333333333" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/home_layout_sun_moon.xml" value="0.1" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/home_layout_today_brief_info.xml" value="0.3541666666666667" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/item_city.xml" value="0.3541666666666667" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/item_forecast15.xml" value="0.3541666666666667" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/item_hours_forecast.xml" value="0.3541666666666667" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/main_activity_main.xml" value="0.3541666666666667" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/main_activity_splash.xml" value="0.3541666666666667" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/popcity_item.xml" value="0.24947916666666667" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/menu/toorbar.xml" value="0.3541666666666667" />
       </map>
     </option>
   </component>

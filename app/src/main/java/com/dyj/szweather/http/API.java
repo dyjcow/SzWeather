@@ -71,7 +71,7 @@ public class API {
          * @param key 常量key
          * @return 对应 observable
          */
-        @GET("v7/weather/7d")
+        @GET("v7/weather/15d")
         Observable<BaseBean<List<WeatherDay>>> getWeatherDay(@Query("location") String location,@Query("key") String key);
 
         /**
@@ -148,7 +148,7 @@ public class API {
          * @return 对应 observable
          */
         @GET("v7/air/now")
-        Observable<BaseBean<List<AirQuality>>> getAirQuality(@Query("location") String location,@Query("key") String key);
+        Observable<BaseBean<AirQuality>> getAirQuality(@Query("location") String location,@Query("key") String key);
 
 
         /**

@@ -1,0 +1,9 @@
+<resources>
+    <declare-styleable name="SunView">
+        <attr name="sun_circle_color" format="color" />
+        <attr name="sun_font_color" format="color" />
+        <attr name="sun_font_size" format="dimension" />
+        <attr name="sun_circle_radius" format="dimension" />
+        <attr name="type" format="boolean" />
+    </declare-styleable>
+</resources>

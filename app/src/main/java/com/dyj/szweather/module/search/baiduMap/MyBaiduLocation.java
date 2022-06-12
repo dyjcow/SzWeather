@@ -12,13 +12,15 @@ import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.didichuxing.doraemonkit.util.ToastUtils;
 import com.dyj.szweather.bean.CityDB;
 import com.dyj.szweather.module.main.activity.MainActivity;
 import com.dyj.szweather.module.search.activity.SearchActivity;
+import com.tamsiree.rxkit.view.RxToast;
+
 import org.litepal.LitePal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -85,7 +87,8 @@ public class MyBaiduLocation {
             activity.getBinding().locationCity.setOnClickListener(v -> {
                 if ( LitePal.where("CityName==?",bdLocation.getDistrict()).find(CityDB.class).size()==0){
                 CityDB cityDB =new CityDB();
-                cityDB.setLocation(bdLocation.getAdCode());
+//                cityDB.setLocation(bdLocation.getAdCode());
+                cityDB.setLocation(String.format(Locale.US,"%.2f",bdLocation.getLongitude()) +","+ String.format(Locale.US,"%.2f",bdLocation.getLatitude()) );
                 cityDB.setCityName(bdLocation.getDistrict());
                 cityDB.setCityAdm2(bdLocation.getCity());
                 cityDB.save();
@@ -93,7 +96,7 @@ public class MyBaiduLocation {
                     // TODO: 2022/6/2 把MainActivity 改为 要跳转到的首页activity
                     actionSecondStart(MainActivity.class, cityDB.getLocation(), cityDB.getCityName());
                 }else {
-                    ToastUtils.showShort("城市已存在");
+                    RxToast.showToast("城市已存在");
                 }
             });
         }else {

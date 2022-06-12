@@ -10,7 +10,32 @@
     <string name="CONNECT_ERROR_MSG">连接错误</string>
     <string name="CONNECT_TIMEOUT_MSG">连接超时</string>
     <string name="OTHER_MSG">未知错误</string>
+
+    <string name="permission_must">即将申请的权限是程序必须依赖的权限,您需要同意才能使用我们的软件</string>
+    <string name="i_know" >我已明白</string>
+    <string name="permission_hand" >您需要去应用程序设置当中手动开启权限</string>
+    <string name="deny" >您拒绝了如下权限：</string>
+    <string name="hours_weather">24小时天气</string>
+    <string name="forecast_15">15天预报</string>
+    <string name="air_quality">空气质量</string>
+    <string name="sun_moon">日月之行</string>
+    <string name="home_wear">穿衣指数</string>
+    <string name="home_health">感冒指数</string>
+    <string name="home_makeup">化妆指数</string>
+    <string name="living_index">生活指数</string>
+    <string name="double_quit">再按一次退出</string>
     <string name="cancel">取消</string>
     <string name="popularCity">热门城市</string>
     <string name="Search">搜索并添加城市</string>
+    <string name="city_search">城市搜索</string>
+    <string name="city_manage">城市管理</string>
+    <string name="sunday">周日</string>
+    <string name="monday">周一</string>
+    <string name="tuesday">周二</string>
+    <string name="wednesday">周三</string>
+    <string name="thursday">周四</string>
+    <string name="friday">周五</string>
+    <string name="saturday">周六</string>
+    <string name="today">今天</string>
+    <string name="tomorrow">明天</string>
 </resources>
