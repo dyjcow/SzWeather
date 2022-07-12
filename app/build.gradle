@@ -124,4 +124,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     //百度地图sdk
     implementation 'com.baidu.lbsyun:BaiduMapSDK_Location:9.1.8'
+
+    //eventBus 用于定位成功后进行ui更新
+    def eventbus_version = '3.2.0'
+    implementation "org.greenrobot:eventbus:$eventbus_version"
 }

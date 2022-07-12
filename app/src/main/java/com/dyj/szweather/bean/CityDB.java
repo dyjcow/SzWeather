@@ -18,6 +18,7 @@ public class CityDB extends LitePalSupport {
     private String cityAdm2;
 
     private String location;
+    private String isLocationCity;
 
     public String getCityName() {
         return cityName;
@@ -49,5 +50,14 @@ public class CityDB extends LitePalSupport {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+
+    public String getIsLocationCity() {
+        return isLocationCity;
+    }
+
+    public void setIsLocationCity(String isLocationCity) {
+        this.isLocationCity = isLocationCity;
     }
 }

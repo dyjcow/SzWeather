@@ -11,9 +11,7 @@ import com.dyj.szweather.databinding.HomeLayoutHoursBinding;
 import com.dyj.szweather.databinding.ItemHoursForecastBinding;
 import com.dyj.szweather.util.LogUtil;
 import com.dyj.szweather.util.MyUtil;
-import com.dyj.szweather.util.ToastUtil;
 import com.dylanc.viewbinding.brvah.BaseViewHolderUtilKt;
-import com.tamsiree.rxkit.view.RxToast;
 
 import java.util.List;
 
