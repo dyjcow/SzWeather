@@ -85,7 +85,8 @@ public class WeatherHours {
     }
 
     public String getText() {
-        return text;
+        if (text.equals("Thundershower")) return "T~shower";
+        else return text;
     }
 
     public void setText(String text) {

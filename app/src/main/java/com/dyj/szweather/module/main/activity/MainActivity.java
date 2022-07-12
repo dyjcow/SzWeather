@@ -7,6 +7,7 @@ import static com.dyj.szweather.util.ActivityUtil.getIntentSecondData;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 import android.view.Menu;
@@ -21,7 +22,11 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.dyj.szweather.R;
 import com.dyj.szweather.base.BaseActivity;
 import com.dyj.szweather.bean.CityDB;
@@ -36,6 +41,8 @@ import com.dyj.szweather.module.search.activity.SearchActivity;
 import com.dyj.szweather.util.ActivityUtil;
 import com.dyj.szweather.util.DisplayUtil;
 import com.dyj.szweather.util.LogUtil;
+import com.dyj.szweather.util.MyUtil;
+import com.dyj.szweather.util.ToastUtil;
 import com.tamsiree.rxkit.view.RxToast;
 import com.zackratos.ultimatebarx.ultimatebarx.java.UltimateBarX;
 
@@ -94,6 +101,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainActivityMainBi
             showPic(PIC_URL);
             getCity();
         }
+
     }
 
     /**
@@ -216,7 +224,15 @@ public class MainActivity extends BaseActivity<MainPresenter, MainActivityMainBi
 
     @Override
     public void showPic(String url) {
-        Glide.with(this).load(url).into(getBinding().imgBc);
+        RequestOptions options = new RequestOptions()
+                .placeholder(mipmap.pic_bg)
+                .error(mipmap.pic_bg)
+                .diskCacheStrategy(DiskCacheStrategy.NONE);
+        Glide.with(this)
+                .load(url)
+//                .transition(DrawableTransitionOptions.withCrossFade())
+                .apply(options)
+                .into(getBinding().imgBc);
     }
 
     @Override

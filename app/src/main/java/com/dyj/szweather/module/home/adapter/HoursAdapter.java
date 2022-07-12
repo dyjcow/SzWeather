@@ -11,7 +11,9 @@ import com.dyj.szweather.databinding.HomeLayoutHoursBinding;
 import com.dyj.szweather.databinding.ItemHoursForecastBinding;
 import com.dyj.szweather.util.LogUtil;
 import com.dyj.szweather.util.MyUtil;
+import com.dyj.szweather.util.ToastUtil;
 import com.dylanc.viewbinding.brvah.BaseViewHolderUtilKt;
+import com.tamsiree.rxkit.view.RxToast;
 
 import java.util.List;
 
@@ -33,7 +35,6 @@ public class HoursAdapter extends BaseQuickAdapter<WeatherHours, BaseViewHolder>
         ItemHoursForecastBinding binding = BaseViewHolderUtilKt.getBinding(baseViewHolder,ItemHoursForecastBinding::bind);
         binding.tvHoursTime.setText(MyUtil.split(weatherHours.getFxTime()));
         binding.ivHours.setImageResource(MyUtil.getWeatherIcon(getContext(),weatherHours.getIcon()));
-        binding.tvTemp.setText(weatherHours.getText());
-
+        binding.tvTemp.setText(String.format("%s℃", weatherHours.getTemp()));
     }
 }

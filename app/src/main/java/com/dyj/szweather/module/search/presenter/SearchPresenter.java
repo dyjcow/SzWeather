@@ -1,6 +1,5 @@
 package com.dyj.szweather.module.search.presenter;
 
-import static com.dyj.szweather.http.API.KEY;
 
 import android.content.Context;
 import android.text.Editable;
@@ -38,7 +37,7 @@ public class SearchPresenter extends BasePresenter<ISearchView> implements andro
     }
 
     public void getPopCity(){
-        addDisposable(apiServer.getPopularCity("20", "cn", KEY), new BaseObserver<BaseBean<List<PopularCity>>>(baseView) {
+        addDisposable(apiServer.getPopularCity("20", "cn"), new BaseObserver<BaseBean<List<PopularCity>>>(baseView) {
             @Override
             public void onSuccess(BaseBean<List<PopularCity>> o) {
                 baseView.showPopCity(o);
@@ -70,7 +69,7 @@ public class SearchPresenter extends BasePresenter<ISearchView> implements andro
         } else {
             baseView.hidePopView();//隐藏热门城市
             //搜索
-            addDisposable(apiServer.getCitySearch(text, KEY), new BaseObserver<BaseBean<List<CitySearch>>>(baseView) {
+            addDisposable(apiServer.getCitySearch(text), new BaseObserver<BaseBean<List<CitySearch>>>(baseView) {
                 @Override
                 public void onSuccess(BaseBean<List<CitySearch>> o) {
 

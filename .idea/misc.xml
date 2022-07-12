@@ -20,15 +20,15 @@
         <entry key="..\:/Work/SzWeather/app/src/main/res/layout/activity_main.xml" value="0.3541666666666667" />
         <entry key="..\:/Work/SzWeather/app/src/main/res/layout/activity_search.xml" value="0.24947916666666667" />
         <entry key="..\:/Work/SzWeather/app/src/main/res/layout/fragment_home.xml" value="0.24947916666666667" />
-        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/home_fragment_home.xml" value="0.3333333333333333" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/home_fragment_home.xml" value="0.2388888888888889" />
         <entry key="..\:/Work/SzWeather/app/src/main/res/layout/home_layout_air_quality.xml" value="0.3333333333333333" />
         <entry key="..\:/Work/SzWeather/app/src/main/res/layout/home_layout_dailyfeel.xml" value="0.3333333333333333" />
-        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/home_layout_fifteen.xml" value="0.1967654986522911" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/home_layout_fifteen.xml" value="0.1" />
         <entry key="..\:/Work/SzWeather/app/src/main/res/layout/home_layout_hours.xml" value="0.3333333333333333" />
-        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/home_layout_sun_moon.xml" value="0.1" />
-        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/home_layout_today_brief_info.xml" value="0.3541666666666667" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/home_layout_sun_moon.xml" value="0.22" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/home_layout_today_brief_info.xml" value="0.2695417789757412" />
         <entry key="..\:/Work/SzWeather/app/src/main/res/layout/item_city.xml" value="0.3541666666666667" />
-        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/item_forecast15.xml" value="0.3541666666666667" />
+        <entry key="..\:/Work/SzWeather/app/src/main/res/layout/item_forecast15.xml" value="0.22" />
         <entry key="..\:/Work/SzWeather/app/src/main/res/layout/item_hours_forecast.xml" value="0.3541666666666667" />
         <entry key="..\:/Work/SzWeather/app/src/main/res/layout/main_activity_main.xml" value="0.3541666666666667" />
         <entry key="..\:/Work/SzWeather/app/src/main/res/layout/main_activity_splash.xml" value="0.3541666666666667" />

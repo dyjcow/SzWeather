@@ -2,6 +2,10 @@ package com.dyj.szweather.http;
 
 
 
+import com.didichuxing.doraemonkit.util.ApiUtils;
+import com.dyj.szweather.R;
+import com.dyj.szweather.util.MyUtil;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -52,11 +56,23 @@ public class MoreBaseUrlInterceptor implements Interceptor {
                     .host(baseURL.host())//主机地址
                     .port(baseURL.port())//端口
                     .build();
+            if (Objects.equals(keyUrl.get(urlName), MyUtil.getString(R.string.geourl))) {
+                newHttpUrl = newHttpUrl.newBuilder()
+                        .addQueryParameter("lang", MyUtil.getNowLanguage())
+                        .addQueryParameter("key",MyUtil.getString(R.string.key))
+                        .build();
+            }
             //获取处理后的新newRequest
             Request newRequest = builder.url(newHttpUrl).build();
             return  chain.proceed(newRequest);
         }else{
-            return chain.proceed(originalRequest);
+            //适配英文接口
+            HttpUrl reOldUrl = oldUrl.newBuilder()
+                    .addQueryParameter("lang", MyUtil.getNowLanguage())
+                    .addQueryParameter("key",MyUtil.getString(R.string.key))
+                    .build();
+            Request reOriginalRequest = builder.url(reOldUrl).build();
+            return chain.proceed(reOriginalRequest);
         }
 
     }

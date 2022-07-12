@@ -14,6 +14,7 @@ import com.tamsiree.rxui.view.dialog.RxDialogLoading;
 
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -152,7 +153,13 @@ public class MyUtil {
         else if (aqi <= 250) flag = "5";
         else flag = "6";
         int id = context.getResources().getIdentifier("color_air_leaf_"+flag,"color",context.getPackageName());
-        return context.getResources().getColor(id, context.getTheme());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return context.getResources().getColor(id, context.getTheme());
+        } else {
+            //noinspection deprecation
+            return context.getResources().getColor(id);
+        }
     }
 
 
@@ -190,132 +197,9 @@ public class MyUtil {
         return simpleDateFormat.format(date);
     }
 
-    public static int getWeatherIcon(String icon){
-        switch (icon) {
-            case "100":
-                return R.drawable.icon_100;
-            case "101":
-                return R.drawable.icon_101;
-            case "102":
-                return R.drawable.icon_102;
-            case "103":
-                return R.drawable.icon_103;
-            case "104":
-                return R.drawable.icon_104;
-            case "150":
-                return R.drawable.icon_150;
-            case "153":
-                return R.drawable.icon_153;
-            case "154":
-                return R.drawable.icon_151;
-            case "300":
-                return R.drawable.icon_300;
-            case "301":
-                return R.drawable.icon_301;
-            case "302":
-                return R.drawable.icon_302;
-            case "303":
-                return R.drawable.icon_303;
-            case "304":
-                return R.drawable.icon_304;
-            case "305":
-                return R.drawable.icon_305;
-            case "306":
-                return R.drawable.icon_306;
-            case "307":
-                return R.drawable.icon_307;
-            case "308":
-                return R.drawable.icon_308;
-            case "309":
-                return R.drawable.icon_309;
-            case "310":
-                return R.drawable.icon_310;
-            case "311":
-                return R.drawable.icon_311;
-            case "312":
-                return R.drawable.icon_312;
-            case "313":
-                return R.drawable.icon_313;
-            case "314":
-                return R.drawable.icon_314;
-            case "315":
-                return R.drawable.icon_315;
-            case "316":
-                return R.drawable.icon_316;
-            case "317":
-                return R.drawable.icon_317;
-            case "318":
-                return R.drawable.icon_318;
-            case "350":
-                return R.drawable.icon_350;
-            case "351":
-                return R.drawable.icon_351;
-            case "399":
-                return R.drawable.icon_399;
-            case "400":
-                return R.drawable.icon_400;
-            case "401":
-                return R.drawable.icon_401;
-            case "402":
-                return R.drawable.icon_402;
-            case "403":
-                return R.drawable.icon_403;
-            case "404":
-                return R.drawable.icon_404;
-            case "405":
-                return R.drawable.icon_405;
-            case "406":
-                return R.drawable.icon_406;
-            case "407":
-                return R.drawable.icon_407;
-            case "408":
-                return R.drawable.icon_408;
-            case "409":
-                return R.drawable.icon_409;
-            case "410":
-                return R.drawable.icon_410;
-            case "456":
-                return R.drawable.icon_456;
-            case "457":
-                return R.drawable.icon_457;
-            case "499":
-                return R.drawable.icon_499;
-            case "500":
-                return R.drawable.icon_500;
-            case "501":
-                return R.drawable.icon_501;
-            case "502":
-                return R.drawable.icon_502;
-            case "503":
-                return R.drawable.icon_503;
-            case "504":
-                return R.drawable.icon_504;
-            case "507":
-                return R.drawable.icon_507;
-            case "508":
-                return R.drawable.icon_509;
-            case "510":
-                return R.drawable.icon_510;
-            case "511":
-                return R.drawable.icon_511;
-            case "512":
-                return R.drawable.icon_512;
-            case "513":
-                return R.drawable.icon_513;
-            case "514":
-                return R.drawable.icon_514;
-            case "515":
-                return R.drawable.icon_515;
-            case "900":
-                return R.drawable.icon_900;
-            case "901":
-                return R.drawable.icon_901;
-            case "999":
-                return R.drawable.icon_999;
-        }
-        return R.drawable.icon_100;
+    public static String getNowLanguage( ) {
+        Locale locale = getApplication().getResources().getConfiguration().locale;
+        return locale.getLanguage();
     }
-
-
 
 }

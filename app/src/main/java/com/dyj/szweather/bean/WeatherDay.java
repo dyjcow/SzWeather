@@ -180,7 +180,9 @@ public class WeatherDay {
     }
 
     public String getTextDay() {
-        return textDay;
+        if (textDay.equals("Thundershower")) return "T~shower";
+        else if (textDay.equals("Moderate Rain")) return "M~Rain";
+        else return textDay;
     }
 
     public void setTextDay(String textDay) {
@@ -196,7 +198,9 @@ public class WeatherDay {
     }
 
     public String getTextNight() {
-        return textNight;
+        if (textNight.equals("Thundershower")) return "T~shower";
+        else if (textNight.equals("Moderate Rain")) return "M~Rain";
+        else return textNight;
     }
 
     public void setTextNight(String textNight) {

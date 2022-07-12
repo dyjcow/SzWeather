@@ -49,6 +49,14 @@
     <string name="saturday">Sat</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
+    <string name="Sunrise">Srise</string>
+    <string name="SunSet">Sset</string>
+    <string name="MoonRise">Mrise</string>
+    <string name="MoonSet">Mset</string>
+    <string name="feel">Feel</string>
+    <string name="Humidity">Humidity</string>
+    <string name="Wind">Wind</string>
+    <string name="Air_pressure">AirPres</string>
 
 
 </resources>

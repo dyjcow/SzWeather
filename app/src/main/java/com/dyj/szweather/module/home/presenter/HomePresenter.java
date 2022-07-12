@@ -35,7 +35,7 @@ public class HomePresenter extends BasePresenter<IHomeView> {
     }
 
     public void getWeatherNow(String location){
-        addDisposable(apiServer.getWeatherNow(location, API.KEY), new BaseObserver<BaseBean<WeatherNow>>(baseView,false) {
+        addDisposable(apiServer.getWeatherNow(location), new BaseObserver<BaseBean<WeatherNow>>(baseView,false) {
 
             @Override
             public void onSuccess(BaseBean<WeatherNow> o) {
@@ -50,7 +50,7 @@ public class HomePresenter extends BasePresenter<IHomeView> {
     }
 
     public void getWeatherHours(String location){
-        addDisposable(apiServer.getWeatherHours(location, API.KEY), new BaseObserver<BaseBean<List<WeatherHours>>>(baseView,false) {
+        addDisposable(apiServer.getWeatherHours(location), new BaseObserver<BaseBean<List<WeatherHours>>>(baseView,false) {
 
             @Override
             public void onSuccess(BaseBean<List<WeatherHours>> o) {
@@ -65,7 +65,7 @@ public class HomePresenter extends BasePresenter<IHomeView> {
     }
 
     public void getWeatherDay(String location){
-        addDisposable(apiServer.getWeatherDay(location, API.KEY), new BaseObserver<BaseBean<List<WeatherDay>>>(baseView,false) {
+        addDisposable(apiServer.getWeatherDay(location), new BaseObserver<BaseBean<List<WeatherDay>>>(baseView,false) {
 
             @Override
             public void onSuccess(BaseBean<List<WeatherDay>> o) {
@@ -80,7 +80,7 @@ public class HomePresenter extends BasePresenter<IHomeView> {
     }
 
     public void getAirQuality(String location){
-        addDisposable(apiServer.getAirQuality(location, API.KEY), new BaseObserver<BaseBean<AirQuality>>(baseView,false) {
+        addDisposable(apiServer.getAirQuality(location), new BaseObserver<BaseBean<AirQuality>>(baseView,false) {
 
             @Override
             public void onSuccess(BaseBean<AirQuality> o) {
@@ -96,7 +96,7 @@ public class HomePresenter extends BasePresenter<IHomeView> {
 
     public void getDailyFeel(String location){
         final String type = "3,9,13";
-        addDisposable(apiServer.getDailyFeel(type, location, API.KEY), new BaseObserver<BaseBean<List<DailyFeel>>>(baseView,false) {
+        addDisposable(apiServer.getDailyFeel(type, location), new BaseObserver<BaseBean<List<DailyFeel>>>(baseView,false) {
 
             @Override
             public void onSuccess(BaseBean<List<DailyFeel>> o) {
@@ -111,7 +111,7 @@ public class HomePresenter extends BasePresenter<IHomeView> {
     }
 
     public void getSunRise(String location,String date){
-        addDisposable(apiServer.getSunRise(location,date, API.KEY), new BaseObserver<BaseBean<?>>(baseView,false) {
+        addDisposable(apiServer.getSunRise(location,date), new BaseObserver<BaseBean<?>>(baseView,false) {
 
             @Override
             public void onSuccess(BaseBean<?> o) {
@@ -126,7 +126,7 @@ public class HomePresenter extends BasePresenter<IHomeView> {
     }
 
     public void getMoonRise(String location,String date){
-        addDisposable(apiServer.getMoonRise(location,date,API.KEY),new BaseObserver<BaseBean<?>>(baseView,false){
+        addDisposable(apiServer.getMoonRise(location,date),new BaseObserver<BaseBean<?>>(baseView,false){
 
             @Override
             public void onSuccess(BaseBean<?> o) {

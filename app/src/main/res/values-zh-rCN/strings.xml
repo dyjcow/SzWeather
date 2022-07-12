@@ -38,4 +38,12 @@
     <string name="saturday">周六</string>
     <string name="today">今天</string>
     <string name="tomorrow">明天</string>
+    <string name="Sunrise">日出</string>
+    <string name="SunSet">日落</string>
+    <string name="MoonRise">月升</string>
+    <string name="MoonSet">月落</string>
+    <string name="feel">体感</string>
+    <string name="Humidity">湿度</string>
+    <string name="Wind">风力</string>
+    <string name="Air_pressure">气压</string>
 </resources>

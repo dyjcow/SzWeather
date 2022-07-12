@@ -234,11 +234,11 @@ public class SunView extends View {
 
         String startTime = TextUtils.isEmpty(mStartTime) ? "" : mStartTime;
         String endTime = TextUtils.isEmpty(mEndTime) ? "" : mEndTime;
-        String sunrise = "日出";
-        String sunset = "日落";
+        String sunrise = MyUtil.getString(R.string.Sunrise);
+        String sunset = MyUtil.getString(R.string.SunSet);
         if (!isSun) {
-            sunrise = "月出";
-            sunset = "月落";
+            sunrise = MyUtil.getString(R.string.MoonRise);
+            sunset = MyUtil.getString(R.string.MoonSet);
         }
         int dp8 = DisplayUtil.dp2px(8);
 

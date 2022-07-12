@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="体感"
+                android:text="@string/feel"
                 android:textColor="@color/color_666" />
 
         </LinearLayout>
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="湿度"
+                android:text="@string/Humidity"
                 android:textColor="@color/color_666" />
 
         </LinearLayout>
@@ -76,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="风力"
+                android:text="@string/Wind"
                 android:textColor="@color/color_666" />
 
         </LinearLayout>
@@ -100,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="气压"
+                android:text="@string/Air_pressure"
                 android:textColor="@color/color_666" />
 
         </LinearLayout>

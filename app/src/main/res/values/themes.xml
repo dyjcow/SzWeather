@@ -73,5 +73,13 @@
         <item name="android:textSize">10sp</item>
     </style>
 
-    <style name="value_item_feel" parent="air_item_value"/>
+    <style name="value_item_feel" parent="air_item_value">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:freezesText">true</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:singleLine">true</item>
+    </style>
 </resources>

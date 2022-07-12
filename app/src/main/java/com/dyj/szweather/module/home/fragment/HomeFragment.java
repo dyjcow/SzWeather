@@ -1,6 +1,7 @@
 package com.dyj.szweather.module.home.fragment;
 
 import android.graphics.Rect;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
@@ -143,7 +144,11 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeFragmentHomeBi
 
         todayBriefInfoBinding.tvFeelTemp.setText(String.format("%s°C", now.getFeelsLike()));
         todayBriefInfoBinding.tvHumidity.setText(String.format("%s%%", now.getHumidity()));
-        todayBriefInfoBinding.tvWindScale.setText(String.format("%s%s级", now.getWindDir(), now.getWindScale()));
+        if (MyUtil.getNowLanguage().equals("en")) {
+            todayBriefInfoBinding.tvWindScale.setText(String.format("%s%s", now.getWindDir(), now.getWindScale()));
+        }else {
+            todayBriefInfoBinding.tvWindScale.setText(String.format("%s%s级", now.getWindDir(), now.getWindScale()));
+        }
         todayBriefInfoBinding.tvPressure.setText(String.format("%shpa", now.getPressure()));
     }
 
@@ -205,6 +210,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeFragmentHomeBi
         dailyfeelBinding.tvHealthValue.setText(daily.get(1).getCategory());
         dailyfeelBinding.tvWearValue.setText(daily.get(0).getCategory());
         dailyfeelBinding.tvMakeupValue.setText(daily.get(2).getCategory());
+        dailyfeelBinding.tvMakeupValue.setSelected(true);
     }
 
     @Override
