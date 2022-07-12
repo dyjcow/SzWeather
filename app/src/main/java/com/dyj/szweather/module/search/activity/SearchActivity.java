@@ -4,7 +4,12 @@ import static com.dyj.szweather.util.ActivityUtil.actionSecondStart;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import android.content.pm.PackageManager;
+
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -20,8 +25,16 @@ import com.dyj.szweather.module.search.adapter.PopAdapter;
 import com.dyj.szweather.module.search.baiduMap.MyBaiduLocation;
 import com.dyj.szweather.module.search.presenter.SearchPresenter;
 import com.dyj.szweather.module.search.view.ISearchView;
+import com.permissionx.guolindev.PermissionX;
+import com.permissionx.guolindev.callback.ExplainReasonCallbackWithBeforeParam;
+import com.permissionx.guolindev.callback.ForwardToSettingsCallback;
+import com.permissionx.guolindev.callback.RequestCallback;
+import com.permissionx.guolindev.request.ExplainScope;
+import com.permissionx.guolindev.request.ForwardScope;
 import com.tamsiree.rxkit.view.RxToast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.litepal.LitePal;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,21 +47,30 @@ public class SearchActivity extends BaseActivity<SearchPresenter, ActivitySearch
     private ArrayAdapter<String> searchListAdapter;
     private List<String> list;
     private BaseBean<List<CitySearch>> o;
-    private final MyBaiduLocation myBaiduLocation = new MyBaiduLocation();
 
     @Override
     protected SearchPresenter createPresenter() {
         list = new ArrayList<>();
-        return new SearchPresenter(this, getBinding().cityAddEdittextSearch, list);//传入list 进行初始化
+        return new SearchPresenter(this,list);//传入list 进行初始化
     }
 
     @Override
     protected void initView() {
+        EventBus.getDefault().register(this);
+        permissionGet();
+        MyBaiduLocation.getInstance().getLocation();
         presenter = createPresenter();
         getBinding().cityAddEdittextSearch.addTextChangedListener(presenter);//加入edittext 监听
-        myBaiduLocation.permissionGet(this);//获取权限 -->在回调方法中进行定位
-        myBaiduLocation.getLocation(this);
-        getBinding().locationCity.setOnClickListener(v -> myBaiduLocation.getLocation(this));
+        getBinding().locationCity.setOnClickListener(v ->{
+            List<CityDB> locationLists;
+            if ((locationLists=LitePal.where("isLocationCity=?", "1").find(CityDB.class)).size()!=0){
+            getBinding().locationCity.setText(locationLists.get(0).getCityName());
+            RxToast.showToast("定位城市已经存在");}
+            else
+            {MyBaiduLocation.getInstance().getLocation();
+            }
+        } );
+
         getBinding().cityAddBtnSearch.setOnClickListener(v -> setToDefault());
         getBinding().cityAddBtnBack.setOnClickListener(v -> finish());
     }
@@ -59,9 +81,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter, ActivitySearch
         getBinding().listview.setAdapter(searchListAdapter);
         getBinding().listview.setOnItemClickListener((parent, view, position, id) -> {
             //获取到 数据存入数据库
-            if (presenter.check()) {
                 addToDB(position);
-            }
         });
         presenter.getPopCity();
     }
@@ -97,23 +117,45 @@ public class SearchActivity extends BaseActivity<SearchPresenter, ActivitySearch
      */
     @Override
     public void addToDB(int position) {
-        if (presenter.check()){
-        List<CityDB> cityDBList = LitePal.where("location==?", o.location.get(position).getId()).find(CityDB.class);
-        if (cityDBList == null || cityDBList.size() == 0) {
-            CityDB cityDB = new CityDB();
-            cityDB.setLocation(o.location.get(position).getId());
-            cityDB.setCityName(o.location.get(position).getName());
-            cityDB.setCityAdm2(o.location.get(position).getAdm2());
-            cityDB.save();
-            finish();
-            // TODO: 2022/6/2 把MainActivity 改为 要跳转到的首页activity
-            actionSecondStart(MainActivity.class, cityDB.getLocation(), cityDB.getCityName());
-        } else {
-            Toast.makeText(this, "城市以存在请勿重复添加", Toast.LENGTH_SHORT).show();
-        }
-        }else {
-            Toast.makeText(this, "城市数量上限", Toast.LENGTH_SHORT).show();
-        }
+        if (presenter.check()) {
+            List<CityDB> cityDBList = LitePal.where("location=?", o.location.get(position).getId()).find(CityDB.class);
+            if (cityDBList.size()==0){//无定位城市
+                /*final AlertDialog.Builder normalDialog=new AlertDialog.Builder(this)
+                        .setTitle("开启定位位置服务")
+                        .setMessage("请到设置中打开定位")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent=new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                startActivity(intent);
+
+                            }
+                        });
+                normalDialog.show();*/
+            }
+
+            List<CityDB> locationCity = LitePal.where("isLocationCity=?", "1").find(CityDB.class);
+            String cityName = locationCity.get(0).getCityName();
+                //防止出现两个定位城市的情况
+                cityName = cityName.substring(0, cityName.length() - 1);
+                //1:检查数据库中是否有该城市 2：检查是否是定位城市
+                if ((cityDBList.size() == 0) && (!cityName.equals(o.location.get(position).getName()))) {//定位城市
+                    CityDB cityDB = new CityDB();
+                    cityDB.setLocation(o.location.get(position).getId());
+                    cityDB.setCityName(o.location.get(position).getName());
+                    cityDB.setCityAdm2(o.location.get(position).getAdm2());
+                    cityDB.save();
+                    finish();
+                    // TODO: 2022/6/2 把MainActivity 改为 要跳转到的首页activity
+                    actionSecondStart(MainActivity.class, cityDB.getLocation(), cityDB.getCityName());
+                } else {
+                    Toast.makeText(this, "城市已存在请勿重复添加", Toast.LENGTH_SHORT).show();
+                }
+
+            }else{
+                RxToast.error("城市数量上限");
+            }
+
     }
 
 
@@ -184,25 +226,48 @@ public class SearchActivity extends BaseActivity<SearchPresenter, ActivitySearch
      * @describe : 定位 危险权限的申请
      * @data  :2022/5/30 16:51
      */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 1) {
-            if (grantResults.length > 0) {
-                for (int result : grantResults) {
-                    if (result != PackageManager.PERMISSION_GRANTED) {
-                        Toast.makeText(this, "必须同意所有权限才能使用本程序", Toast.LENGTH_SHORT).show();
-                        finish();
-                        return;
+    public void permissionGet(){
+        PermissionX.init(SearchActivity.this)
+                .permissions(Manifest.permission.ACCESS_FINE_LOCATION)
+                .onExplainRequestReason(new ExplainReasonCallbackWithBeforeParam() {
+                    @Override
+                    public void onExplainReason(@NonNull ExplainScope scope, @NonNull List<String> deniedList, boolean beforeRequest) {
+                        scope.showRequestReasonDialog(deniedList,"定位权限用于获取定位城市","我已明白");
                     }
-                }
-                myBaiduLocation.getLocation(this);
-            } else {
-                Toast.makeText(this, "发生未知错误", Toast.LENGTH_SHORT).show();
-                finish();
+                }).onForwardToSettings(new ForwardToSettingsCallback() {
+            @Override
+            public void onForwardToSettings(@NonNull ForwardScope scope, @NonNull List<String> deniedList) {
+                scope.showForwardToSettingsDialog(deniedList,"您需要去设置中手动开启权限","我已明白");
             }
-        }
+        }).request(new RequestCallback() {
+            @Override
+            public void onResult(boolean allGranted, @NonNull List<String> grantedList, @NonNull List<String> deniedList) {
+                if (allGranted){
+                    MyBaiduLocation.getInstance().getLocation();
+                }else {
+                    RxToast.normal("你拒绝了定位权限");
+                }
+            }
+        });
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MyBaiduLocation.getInstance().getLocation();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+    @Subscribe
+    public void onGetLocation(String cityName){
+        getBinding().locationCity.setText(cityName);
+
+    }
 }
+
+

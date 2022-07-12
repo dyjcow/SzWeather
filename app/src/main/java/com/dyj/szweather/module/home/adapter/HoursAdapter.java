@@ -34,6 +34,5 @@ public class HoursAdapter extends BaseQuickAdapter<WeatherHours, BaseViewHolder>
         binding.tvHoursTime.setText(MyUtil.split(weatherHours.getFxTime()));
         binding.ivHours.setImageResource(MyUtil.getWeatherIcon(getContext(),weatherHours.getIcon()));
         binding.tvTemp.setText(weatherHours.getText());
-
     }
 }

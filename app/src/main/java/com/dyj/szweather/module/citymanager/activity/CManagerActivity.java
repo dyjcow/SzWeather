@@ -84,6 +84,7 @@ public class CManagerActivity extends BaseActivity<CManagerPresenter, ActivityCm
             nCity.setLocation(cityDB.getLocation());
             nCity.setCityName(cityDB.getCityName());
             nCity.setCityAdm2(cityDB.getCityAdm2());
+            nCity.setIsLocationCity(cityDB.getIsLocationCity());
             nList.add(nCity);
         }
         LitePal.deleteAll(CityDB.class);

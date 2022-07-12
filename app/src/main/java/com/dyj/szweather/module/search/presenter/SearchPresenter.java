@@ -4,6 +4,7 @@ import static com.dyj.szweather.http.API.KEY;
 
 import android.content.Context;
 import android.text.Editable;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,12 +25,11 @@ import java.util.List;
  */
 public class SearchPresenter extends BasePresenter<ISearchView> implements android.text.TextWatcher{
 
-    private final EditText editText;
     private final List<String> lists;
 
-    public SearchPresenter(ISearchView baseView, EditText editText, List<String> list) {
+    public SearchPresenter(ISearchView baseView, List<String> list) {
         super(baseView);
-        this.editText = editText;
+
         this.lists = list;
     }
 
@@ -64,7 +64,7 @@ public class SearchPresenter extends BasePresenter<ISearchView> implements andro
 
     @Override
     public void afterTextChanged(Editable s) {
-        String text = editText.getText().toString().trim();
+        String text = s.toString();
         if (text.length() == 0) {
             baseView.setToDefault();//baseView为activity实例
         } else {

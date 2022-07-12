@@ -1,8 +1,9 @@
 package com.dyj.szweather.module.search.baiduMap;
 
 import static com.dyj.szweather.app.App.getContext;
-import static com.dyj.szweather.util.ActivityUtil.actionSecondStart;
+
 import android.Manifest;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
@@ -13,14 +14,12 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.dyj.szweather.bean.CityDB;
-import com.dyj.szweather.module.main.activity.MainActivity;
-import com.dyj.szweather.module.search.activity.SearchActivity;
 import com.tamsiree.rxkit.view.RxToast;
 
+import org.greenrobot.eventbus.EventBus;
 import org.litepal.LitePal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 
 /**
@@ -30,9 +29,23 @@ import java.util.Locale;
  */
 public class MyBaiduLocation {
 
-    SearchActivity activity;
-    public  void   getLocation(SearchActivity activity) {
-        this.activity=activity;
+    //public static CityDB locationCity=new CityDB();
+    private volatile static MyBaiduLocation baiduLocation;
+
+    /**
+     * 获取单例对象
+     * @return baiduLocation
+     */
+    public static MyBaiduLocation getInstance(){
+        if (baiduLocation==null){
+            synchronized (MyBaiduLocation.class){
+                baiduLocation=new MyBaiduLocation();
+            }
+        }
+        return baiduLocation;
+    }
+
+    public  void   getLocation() {
             LocationClient mLocationClient = null;
         try {
             mLocationClient =new LocationClient(getContext());
@@ -47,7 +60,7 @@ public class MyBaiduLocation {
             option.setIsNeedLocationPoiList(true);
             option.setNeedNewVersionRgc(true);
             option.setOpenGps(true);
-            option.setScanSpan(5000);
+           // option.setScanSpan(5000);
             option.setCoorType("bd09ll");
             option.setLocationMode(LocationClientOption.LocationMode.Device_Sensors);
         assert mLocationClient != null;
@@ -55,52 +68,23 @@ public class MyBaiduLocation {
             mLocationClient.start();
     }
 
-    public void permissionGet(SearchActivity activity){
-        List<String> permissionList = new ArrayList<>();
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.
-                permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        }
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.
-                permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-        }
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.
-                permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.READ_PHONE_STATE);
-        }
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.
-                permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-        if (!permissionList.isEmpty()) {
-            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
-            ActivityCompat.requestPermissions(activity, permissions, 1);
-        }
-    }
+
     //回调方法
+    // TODO: 2022/7/7 setButtonText的方法不用回调了，只在MainActivity中完成定位 ，后续 SearchActivity中只负责在数据库中查询显示，不进行定位操作
     class MyLocationListener extends BDAbstractLocationListener {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
-            if (bdLocation.getDistrict()!=null){
-            activity.getBinding().locationCity.setText(bdLocation.getDistrict());
-            activity.getBinding().locationCity.setOnClickListener(v -> {
-                if ( LitePal.where("CityName==?",bdLocation.getDistrict()).find(CityDB.class).size()==0){
-                CityDB cityDB =new CityDB();
-//                cityDB.setLocation(bdLocation.getAdCode());
-                cityDB.setLocation(String.format(Locale.US,"%.2f",bdLocation.getLongitude()) +","+ String.format(Locale.US,"%.2f",bdLocation.getLatitude()) );
-                cityDB.setCityName(bdLocation.getDistrict());
-                cityDB.setCityAdm2(bdLocation.getCity());
-                cityDB.save();
-                    activity.finish();
-                    // TODO: 2022/6/2 把MainActivity 改为 要跳转到的首页activity
-                    actionSecondStart(MainActivity.class, cityDB.getLocation(), cityDB.getCityName());
+            //先检查数据库中是否有定位城市
+            if (bdLocation.getDistrict()!=null) {//表示定位成功
+               if(LitePal.where("isLocationCity=?","1").find(CityDB.class).size()==0){
+                DatabaseLocationUtil.addLocationCityToCityDB(bdLocation);
                 }else {
-                    RxToast.showToast("城市已存在");
+                    DatabaseLocationUtil.upDataLocationCityBD(bdLocation);
                 }
-            });
-        }else {
-                activity.showGetLocationError();
+                //DatabaseLocationUtil.addLocationCityToCityDB(bdLocation);
+                EventBus.getDefault().post(bdLocation.getDistrict());
+            }else {
+                RxToast.error("定位失败");
             }
         }
     }

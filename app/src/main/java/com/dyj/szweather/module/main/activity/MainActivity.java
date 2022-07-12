@@ -33,6 +33,7 @@ import com.dyj.szweather.module.main.animation.DepthPageTransformer;
 import com.dyj.szweather.module.main.presenter.MainPresenter;
 import com.dyj.szweather.module.main.view.IMainView;
 import com.dyj.szweather.module.search.activity.SearchActivity;
+import com.dyj.szweather.module.search.baiduMap.MyBaiduLocation;
 import com.dyj.szweather.util.ActivityUtil;
 import com.dyj.szweather.util.DisplayUtil;
 import com.dyj.szweather.util.LogUtil;
@@ -83,6 +84,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainActivityMainBi
                 .light(true)
                 .transparent()
                 .apply();
+        MyBaiduLocation.getInstance().getLocation();//每次进入时获取定位--->实现定位的实时更新
         list = LitePal.findAll(CityDB.class);
         if (list.isEmpty()) ActivityUtil.startActivity(SearchActivity.class,true);
         else {
