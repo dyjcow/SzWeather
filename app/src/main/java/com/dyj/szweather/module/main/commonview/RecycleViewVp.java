@@ -3,6 +3,7 @@ package com.dyj.szweather.module.main.commonview;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,17 +42,23 @@ public class RecycleViewVp extends RecyclerView {
             case MotionEvent.ACTION_MOVE:
                 int endX = (int) ev.getX();
                 int endY = (int) ev.getY();
-                int disX = Math.abs(endX - startX);
-                int disY = Math.abs(endY - startY);
-                if (disX > disY) {
-                    getParent().requestDisallowInterceptTouchEvent(false);
-                } else {
-                    getParent().requestDisallowInterceptTouchEvent(true);//下拉的时候是false
+                int disX = endX - startX;
+                int disY = endY - startY;
+                //设定内部是否可滑动
+                boolean hasScrollView = false;
+                if (canScrollHorizontally(-1) && disX > 0){
+                    hasScrollView = true;
                 }
+                if (canScrollHorizontally(1) && disX < 0){
+                    hasScrollView = true;
+                }
+                //角度正确且内部可滑动，则让上层view别拦截我的事件
+                float r = (float)Math.abs(disY)/Math.abs(disX);
+                getParent().requestDisallowInterceptTouchEvent(r < 0.7f && hasScrollView);
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                getParent().requestDisallowInterceptTouchEvent(true);
+                getParent().requestDisallowInterceptTouchEvent(false);
                 break;
         }
         return super.dispatchTouchEvent(ev);

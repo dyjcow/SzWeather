@@ -68,7 +68,8 @@ public class FifteenAdapter extends BaseQuickAdapter<WeatherDay, BaseViewHolder>
         else {
             String[] dateArray = weatherDay.getFxDate().split("-");
             Calendar calendar = Calendar.getInstance();
-            calendar.set(Integer.parseInt(dateArray[0]),Integer.parseInt(dateArray[1]),Integer.parseInt(dateArray[2]));
+            //月份是从0开始的，所以要减去1
+            calendar.set(Integer.parseInt(dateArray[0]),Integer.parseInt(dateArray[1])-1,Integer.parseInt(dateArray[2]));
             int now = calendar.get(Calendar.DAY_OF_WEEK)-1;
             if (now < 0) now = 0;
             return week.get(now);

@@ -15,7 +15,7 @@
         android:textSize="16sp"
         tools:ignore="RtlSymmetry" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.dyj.szweather.module.main.commonview.RecycleViewVp
         android:id="@+id/rv_forecast_hours"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
