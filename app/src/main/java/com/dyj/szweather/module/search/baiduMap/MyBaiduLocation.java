@@ -17,9 +17,11 @@ import com.dyj.szweather.bean.CityDB;
 import com.tamsiree.rxkit.view.RxToast;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.litepal.LitePal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -29,8 +31,9 @@ import java.util.List;
  */
 public class MyBaiduLocation {
 
-    //public static CityDB locationCity=new CityDB();
+    public static boolean isClick=false;
     private volatile static MyBaiduLocation baiduLocation;
+    public static String locationCity=null;
 
     /**
      * 获取单例对象
@@ -60,6 +63,7 @@ public class MyBaiduLocation {
             option.setIsNeedLocationPoiList(true);
             option.setNeedNewVersionRgc(true);
             option.setOpenGps(true);
+
            // option.setScanSpan(5000);
             option.setCoorType("bd09ll");
             option.setLocationMode(LocationClientOption.LocationMode.Device_Sensors);
@@ -76,16 +80,27 @@ public class MyBaiduLocation {
         public void onReceiveLocation(BDLocation bdLocation) {
             //先检查数据库中是否有定位城市
             if (bdLocation.getDistrict()!=null) {//表示定位成功
-               if(LitePal.where("isLocationCity=?","1").find(CityDB.class).size()==0){
-                DatabaseLocationUtil.addLocationCityToCityDB(bdLocation);
-                }else {
-                    DatabaseLocationUtil.upDataLocationCityBD(bdLocation);
+                locationCity=bdLocation.getDistrict();
+                List<CityDB> cityDBList = LitePal.where("isLocationCity=?", "1").find(CityDB.class);
+                int num=cityDBList.size();
+               if(num!=0&&cityDBList.get(0).getCityName().equals(bdLocation.getDistrict())){
+                    DatabaseLocationUtil.upDataLocationCityBD(bdLocation);//升级数据库
+
                 }
-                //DatabaseLocationUtil.addLocationCityToCityDB(bdLocation);
-                EventBus.getDefault().post(bdLocation.getDistrict());
+               if (num==0&&isClick){
+                   DatabaseLocationUtil.addLocationCityToCityDB(bdLocation);
+
+               }
+               if (Locale.getDefault()==Locale.CHINA) {
+                   EventBus.getDefault().post(bdLocation.getDistrict());
+               }else {
+                   EventBus.getDefault().post(String.format(Locale.US,"%.2f",bdLocation.getLongitude()) +","+ String.format(Locale.US,"%.2f",bdLocation.getLatitude()) );
+               }
             }else {
                 RxToast.error("定位失败");
             }
+
         }
     }
+
 }

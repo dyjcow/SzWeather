@@ -11,9 +11,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.Settings;
 import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.dyj.szweather.R;
 import com.dyj.szweather.base.BaseActivity;
 import com.dyj.szweather.base.BaseBean;
 import com.dyj.szweather.bean.CityDB;
@@ -22,9 +24,11 @@ import com.dyj.szweather.bean.PopularCity;
 import com.dyj.szweather.databinding.ActivitySearchBinding;
 import com.dyj.szweather.module.main.activity.MainActivity;
 import com.dyj.szweather.module.search.adapter.PopAdapter;
+import com.dyj.szweather.module.search.baiduMap.DatabaseLocationUtil;
 import com.dyj.szweather.module.search.baiduMap.MyBaiduLocation;
 import com.dyj.szweather.module.search.presenter.SearchPresenter;
 import com.dyj.szweather.module.search.view.ISearchView;
+import com.dyj.szweather.util.MyUtil;
 import com.permissionx.guolindev.PermissionX;
 import com.permissionx.guolindev.callback.ExplainReasonCallbackWithBeforeParam;
 import com.permissionx.guolindev.callback.ForwardToSettingsCallback;
@@ -38,6 +42,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.litepal.LitePal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
 /**
  * @author   :yinxiaolong
  * @describe :
@@ -56,6 +62,8 @@ public class SearchActivity extends BaseActivity<SearchPresenter, ActivitySearch
 
     @Override
     protected void initView() {
+        Window window = this.getWindow();
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         EventBus.getDefault().register(this);
         permissionGet();
         MyBaiduLocation.getInstance().getLocation();
@@ -65,9 +73,13 @@ public class SearchActivity extends BaseActivity<SearchPresenter, ActivitySearch
             List<CityDB> locationLists;
             if ((locationLists=LitePal.where("isLocationCity=?", "1").find(CityDB.class)).size()!=0){
             getBinding().locationCity.setText(locationLists.get(0).getCityName());
-            RxToast.showToast("定位城市已经存在");}
+            RxToast.error(MyUtil.getString(R.string.City_existed));
+            }
             else
-            {MyBaiduLocation.getInstance().getLocation();
+            {
+                MyBaiduLocation.isClick=true;
+                MyBaiduLocation.getInstance().getLocation();
+                startActivity(new Intent(SearchActivity.this,MainActivity.class));
             }
         } );
 
@@ -118,28 +130,11 @@ public class SearchActivity extends BaseActivity<SearchPresenter, ActivitySearch
     @Override
     public void addToDB(int position) {
         if (presenter.check()) {
-            List<CityDB> cityDBList = LitePal.where("location=?", o.location.get(position).getId()).find(CityDB.class);
-            if (cityDBList.size()==0){//无定位城市
-                /*final AlertDialog.Builder normalDialog=new AlertDialog.Builder(this)
-                        .setTitle("开启定位位置服务")
-                        .setMessage("请到设置中打开定位")
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent=new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                                startActivity(intent);
-
-                            }
-                        });
-                normalDialog.show();*/
-            }
-
-            List<CityDB> locationCity = LitePal.where("isLocationCity=?", "1").find(CityDB.class);
-            String cityName = locationCity.get(0).getCityName();
-                //防止出现两个定位城市的情况
-                cityName = cityName.substring(0, cityName.length() - 1);
+               MyBaiduLocation.locationCity= MyBaiduLocation.locationCity.substring(0, MyBaiduLocation.locationCity.length() - 1);
+                List<CityDB> cityDBList=LitePal.where("location=?",o.location.get(position).getId()).find(CityDB.class);
                 //1:检查数据库中是否有该城市 2：检查是否是定位城市
-                if ((cityDBList.size() == 0) && (!cityName.equals(o.location.get(position).getName()))) {//定位城市
+            if (!MyBaiduLocation.locationCity.equals(o.location.get(position).getName())) {
+                if ((cityDBList.size() == 0)) {//定位城市
                     CityDB cityDB = new CityDB();
                     cityDB.setLocation(o.location.get(position).getId());
                     cityDB.setCityName(o.location.get(position).getName());
@@ -149,11 +144,29 @@ public class SearchActivity extends BaseActivity<SearchPresenter, ActivitySearch
                     // TODO: 2022/6/2 把MainActivity 改为 要跳转到的首页activity
                     actionSecondStart(MainActivity.class, cityDB.getLocation(), cityDB.getCityName());
                 } else {
-                    Toast.makeText(this, "城市已存在请勿重复添加", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, MyUtil.getString(R.string.City_existed), Toast.LENGTH_SHORT).show();
                 }
+            }else {
+                //是定位城市并且 并不存在定位城市
+                if (LitePal.where("isLocationCity=?","1").find(CityDB.class).size()==0){
+
+                    CityDB cityDB = new CityDB();
+                    cityDB.setLocation(o.location.get(position).getId());
+                    cityDB.setCityName(o.location.get(position).getName());
+                    cityDB.setCityAdm2(o.location.get(position).getAdm2());
+                    cityDB.setIsLocationCity("1");
+                    cityDB.save();
+                    finish();
+                    // TODO: 2022/6/2 把MainActivity 改为 要跳转到的首页activity
+                    actionSecondStart(MainActivity.class, cityDB.getLocation(), cityDB.getCityName());
+                }else {
+                    Toast.makeText(this, MyUtil.getString(R.string.City_existed), Toast.LENGTH_SHORT).show();
+                }
+            }
 
             }else{
-                RxToast.error("城市数量上限");
+                RxToast.error(MyUtil.getString(R.string.city_is_full));
+
             }
 
     }
@@ -203,21 +216,21 @@ public class SearchActivity extends BaseActivity<SearchPresenter, ActivitySearch
             // TODO: 2022/6/2 把MainActivity 改为 要跳转到的首页activity
             actionSecondStart(MainActivity.class, cityDB.getLocation(), cityDB.getCityName());
         } else {
-            Toast.makeText(this, "城市以存在请勿重复添加", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, MyUtil.getString(R.string.City_existed), Toast.LENGTH_SHORT).show();
         }
         }else {
-            Toast.makeText(this, "城市数量上限", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, MyUtil.getString(R.string.city_is_full), Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void showSearchError() {
-        RxToast.showToast("城市不存在");
+        RxToast.showToast(MyUtil.getString(R.string.city_not_existe));
     }
 
     @Override
     public void showGetLocationError() {
-        RxToast.showToast("定位失败");
+        RxToast.showToast(MyUtil.getString(R.string.getLocation_fail));
     }
 
 
@@ -232,12 +245,12 @@ public class SearchActivity extends BaseActivity<SearchPresenter, ActivitySearch
                 .onExplainRequestReason(new ExplainReasonCallbackWithBeforeParam() {
                     @Override
                     public void onExplainReason(@NonNull ExplainScope scope, @NonNull List<String> deniedList, boolean beforeRequest) {
-                        scope.showRequestReasonDialog(deniedList,"定位权限用于获取定位城市","我已明白");
+                        scope.showRequestReasonDialog(deniedList,MyUtil.getString(R.string.permission_must),"我已明白");
                     }
                 }).onForwardToSettings(new ForwardToSettingsCallback() {
             @Override
             public void onForwardToSettings(@NonNull ForwardScope scope, @NonNull List<String> deniedList) {
-                scope.showForwardToSettingsDialog(deniedList,"您需要去设置中手动开启权限","我已明白");
+                scope.showForwardToSettingsDialog(deniedList,MyUtil.getString(R.string.permission_hand),MyUtil.getString(R.string.i_know));
             }
         }).request(new RequestCallback() {
             @Override
@@ -245,7 +258,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter, ActivitySearch
                 if (allGranted){
                     MyBaiduLocation.getInstance().getLocation();
                 }else {
-                    RxToast.normal("你拒绝了定位权限");
+                    RxToast.normal(MyUtil.getString(R.string.deny));
                 }
             }
         });
@@ -265,8 +278,15 @@ public class SearchActivity extends BaseActivity<SearchPresenter, ActivitySearch
     }
     @Subscribe
     public void onGetLocation(String cityName){
+        if (Locale.getDefault()== Locale.CHINA) {
+            getBinding().locationCity.setText(cityName);
+        }else {
+           presenter.changeLocationLang(cityName);
+        }
+    }
+    @Override
+    public void setLocationText(String cityName){
         getBinding().locationCity.setText(cityName);
-
     }
 }
 

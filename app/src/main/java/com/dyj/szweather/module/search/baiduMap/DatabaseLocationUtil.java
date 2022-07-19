@@ -25,7 +25,7 @@ public class DatabaseLocationUtil {
  public static void addLocationCityToCityDB(BDLocation bdLocation){
         CityDB cityDB=new CityDB();
         cityDB.setLocation(String.format(Locale.US,"%.2f",bdLocation.getLongitude()) +","+ String.format(Locale.US,"%.2f",bdLocation.getLatitude()) );
-        cityDB.setCityName(bdLocation.getDistrict());
+        cityDB.setCityName(bdLocation.getDistrict().substring(0,bdLocation.getDistrict().length()-1));
         cityDB.setCityAdm2(bdLocation.getCity());
         cityDB.setIsLocationCity("1");
         cityDB.save();
@@ -34,7 +34,7 @@ public class DatabaseLocationUtil {
     public static void upDataLocationCityBD(BDLocation bdLocation){
         CityDB cityDB=new CityDB();
         cityDB.setLocation(String.format(Locale.US,"%.2f",bdLocation.getLongitude()) +","+ String.format(Locale.US,"%.2f",bdLocation.getLatitude()) );
-        cityDB.setCityName(bdLocation.getDistrict());
+        cityDB.setCityName(bdLocation.getDistrict().substring(0,bdLocation.getDistrict().length()-1));
         cityDB.setCityAdm2(bdLocation.getCity());
         cityDB.setIsLocationCity("1");
         cityDB.updateAll("isLocationCity = ? or cityName =?","1",bdLocation.getDistrict().substring(0,bdLocation.getDistrict().length()-1));

@@ -46,4 +46,8 @@
     <string name="Humidity">湿度</string>
     <string name="Wind">风力</string>
     <string name="Air_pressure">气压</string>
+    <string name="City_existed">城市已经存在</string>
+    <string name="getLocation_fail">定位</string>
+    <string name="city_not_existe">城市不存在</string>
+    <string name="city_is_full">城市数量上限</string>
 </resources>

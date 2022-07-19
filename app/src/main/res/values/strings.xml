@@ -57,6 +57,8 @@
     <string name="Humidity">Humidity</string>
     <string name="Wind">Wind</string>
     <string name="Air_pressure">AirPres</string>
-
-
+    <string name="City_existed">city has existed</string>
+    <string name="getLocation_fail">Positioning failed</string>
+    <string name="city_not_existe">Cities don\'t exist</string>
+    <string name="city_is_full">Maximum number of cities</string>
 </resources>

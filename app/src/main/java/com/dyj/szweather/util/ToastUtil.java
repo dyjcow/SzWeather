@@ -13,7 +13,6 @@ import android.widget.Toast;
  */
 public class ToastUtil {
     private static Toast toast;
-
     public ToastUtil() {
     }
 
@@ -59,7 +58,6 @@ public class ToastUtil {
         } else {
             toast.setText(msg);
         }
-
         LinearLayout linearLayout = (LinearLayout) toast.getView();
         TextView messageTextView = (TextView) linearLayout.getChildAt(0);
         toast.setGravity(17, 0, 0);

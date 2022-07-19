@@ -16,6 +16,7 @@ import com.dyj.szweather.bean.PopularCity;
 import com.dyj.szweather.module.search.view.ISearchView;
 import org.litepal.LitePal;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author yinxiaolong
@@ -50,6 +51,27 @@ public class SearchPresenter extends BasePresenter<ISearchView> implements andro
         });
     }
 
+    public void changeLocationLang(String location){
+        addDisposable(apiServer.getCitySearch(location), new BaseObserver<BaseBean<List<CitySearch>>>(baseView) {
+
+
+            @Override
+            public void onSuccess(BaseBean<List<CitySearch>> o) {
+                baseView.setLocationText(o.location.get(0).getName());
+                CityDB cityDB = new CityDB();
+                cityDB.setLocation(o.location.get(0).getId());
+                cityDB.setCityName(o.location.get(0).getName());
+                cityDB.setCityAdm2(o.location.get(0).getAdm2());
+                cityDB.setIsLocationCity("1");
+                cityDB.updateAll("location=?",location);//更新数据库
+            }
+
+            @Override
+            public void onError(String msg) {
+
+            }
+        });
+    }
     //城市搜索
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {

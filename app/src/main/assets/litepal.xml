@@ -3,12 +3,8 @@
     <dbname value="city" ></dbname>
 
     <version value="2" ></version>
-
-
-
     <list>
         <mapping class="com.dyj.szweather.bean.CityDB">
-
         </mapping>
     </list>
 </litepal>

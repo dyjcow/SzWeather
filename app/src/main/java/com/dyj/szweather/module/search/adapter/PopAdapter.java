@@ -13,6 +13,7 @@ import com.dyj.szweather.R;
 import com.dyj.szweather.base.BaseBean;
 import com.dyj.szweather.bean.CityDB;
 import com.dyj.szweather.bean.PopularCity;
+import com.dyj.szweather.databinding.PopcityItemBinding;
 import com.dyj.szweather.module.search.activity.SearchActivity;
 import com.google.android.material.button.MaterialButton;
 
@@ -36,14 +37,15 @@ public class PopAdapter extends RecyclerView.Adapter<PopAdapter.PopViewHolder> {
     @NonNull
     @Override
     public PopViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.popcity_item,parent,false);
-        return new PopViewHolder(view);
+        PopcityItemBinding binding=PopcityItemBinding.inflate(LayoutInflater.from(parent.getContext()));
+        //View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.popcity_item,parent,false);
+        return new PopViewHolder(binding.getRoot(),binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PopViewHolder holder, @SuppressLint("RecyclerView") int position) {
     holder.button.setText(popCity.topCityList.get(position).getName());
-    if (LitePal.where("location==?",popCity.topCityList.get(position).getId()).find(CityDB.class)==null||LitePal.where("location==?",popCity.topCityList.get(position).getId()).find(CityDB.class).size()!=0)
+    if (LitePal.where("location=?",popCity.topCityList.get(position).getId()).find(CityDB.class)==null||LitePal.where("location==?",popCity.topCityList.get(position).getId()).find(CityDB.class).size()!=0)
     {
         holder.button.setSelected(true);
     }
@@ -57,9 +59,9 @@ public class PopAdapter extends RecyclerView.Adapter<PopAdapter.PopViewHolder> {
 
     public static class PopViewHolder extends RecyclerView.ViewHolder {
         MaterialButton button;
-        public PopViewHolder(@NonNull View itemView) {
+        public PopViewHolder(@NonNull View itemView, PopcityItemBinding binding) {
             super(itemView);
-            button=itemView.findViewById(R.id.button);
+            button=binding.button;
         }
     }
 

@@ -21,4 +21,5 @@ public interface ISearchView extends BaseView {
     void addPopCityToDB(int position ,BaseBean<List<PopularCity>> popCity);
     void showSearchError();
     void showGetLocationError();
+    void setLocationText(String name);
 }
